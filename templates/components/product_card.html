@@ -1,0 +1,13 @@
+<article class="card group overflow-hidden">
+  <div class="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-catMint/50">
+    {% if product.main_image %}<img src="{{ product.main_image.url }}" alt="{{ product.name }} — {{ product.color_name }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">{% else %}<div class="fashion-placeholder h-full"><span>Airish Fox</span></div>{% endif %}
+    {% if product.is_new %}<span class="badge absolute left-4 top-4">Новинка</span>{% endif %}
+  </div>
+  <div class="p-5">
+    <p class="text-sm font-bold text-fox">{{ product.category.name }}</p>
+    <h3 class="mt-1 text-xl font-black">{{ product.name }}</h3>
+    <p class="mt-2 text-graphite/65">{{ product.short_description }}</p>
+    <div class="mt-4 flex flex-wrap gap-2 text-sm"><span class="pill">{{ product.sizes }}</span><span class="pill"><i style="background: {{ product.color_hex }}"></i>{{ product.color_name }}</span></div>
+    <div class="mt-5 flex items-center justify-between gap-3"><strong class="text-2xl">{{ product.price|floatformat:0 }} ₽</strong><a href="{% url 'contacts:contacts' %}" class="btn-secondary">Заказать</a></div>
+  </div>
+</article>
