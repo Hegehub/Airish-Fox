@@ -1,0 +1,17 @@
+{% if site_settings.mascot_enabled %}
+<span class="mascot mascot-{{ state|default:'idle' }} mascot-{{ size|default:'md' }} {{ mascot_class|default:'' }}" role="img" aria-label="{{ label|default:'Фирменная лисичка Airish Fox' }}">
+  {% if site_settings.mascot_provider == 'static' and site_settings.mascot_static_image %}
+    <img src="{{ site_settings.mascot_static_image.url }}" alt="{{ label|default:'Фирменная лисичка Airish Fox' }}" loading="lazy">
+  {% elif site_settings.mascot_provider == 'rive' and site_settings.mascot_animation_url %}
+    <span class="mascot-animation" data-provider="rive" data-src="{{ site_settings.mascot_animation_url }}"></span>
+    {% if site_settings.mascot_static_image %}<noscript><img src="{{ site_settings.mascot_static_image.url }}" alt="{{ label|default:'Фирменная лисичка Airish Fox' }}"></noscript>{% endif %}
+  {% elif site_settings.mascot_provider == 'lottie' and site_settings.mascot_animation_url %}
+    <span class="mascot-animation" data-provider="lottie" data-src="{{ site_settings.mascot_animation_url }}"></span>
+    {% if site_settings.mascot_static_image %}<noscript><img src="{{ site_settings.mascot_static_image.url }}" alt="{{ label|default:'Фирменная лисичка Airish Fox' }}"></noscript>{% endif %}
+  {% elif site_settings.mascot_static_image %}
+    <img src="{{ site_settings.mascot_static_image.url }}" alt="{{ label|default:'Фирменная лисичка Airish Fox' }}" loading="lazy">
+  {% else %}
+    <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path class="mascot-tail" d="M87 71c21 6 27-12 20-29-7 12-22 13-31 3 1 12 3 21 11 26Z"/><path class="mascot-face" d="M26 48 17 19l26 13c10-5 24-5 34 0l26-13-9 29c5 8 7 18 5 28-4 22-22 34-39 34S25 98 21 76c-2-10 0-20 5-28Z"/><path class="mascot-muzzle" d="M43 73c7-8 27-8 34 0-4 13-11 20-17 20s-13-7-17-20Z"/><circle cx="45" cy="58" r="5"/><circle cx="75" cy="58" r="5"/><path d="M56 72h8l-4 5z" fill="#242424"/></svg>
+  {% endif %}
+</span>
+{% endif %}

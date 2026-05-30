@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero-shell fox-pattern">
+  <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
+    <div>
+      <p class="eyebrow">Cat mint boutique</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight tracking-tight sm:text-7xl">{{ site_settings.hero_title|default:'Airish Fox' }}</h1>
+      <p class="mt-5 text-2xl font-bold text-fox">{{ site_settings.hero_subtitle|default:site_settings.slogan }}</p>
+      <p class="mt-5 max-w-xl text-lg text-graphite/70">{{ site_settings.short_description }}</p>
+      <div class="mt-8 flex flex-wrap gap-4"><a class="btn-primary" href="{% url 'catalog:collection' %}">{{ site_settings.hero_cta_primary_label }}</a><a class="btn-ghost" href="{% url 'contacts:contacts' %}">{{ site_settings.hero_cta_secondary_label }}</a></div>
+    </div>
+    <div class="relative">
+      <div class="blob blob-mint"></div><div class="blob blob-orange"></div>
+      <div class="relative rounded-[3rem] bg-white p-4 shadow-2xl">
+        {% if site_settings.hero_image %}<img src="{{ site_settings.hero_image.url }}" alt="Fashion образ Airish Fox" class="aspect-[4/5] w-full rounded-[2.3rem] object-cover">{% else %}<div class="fashion-hero"><span>soft fashion<br>fox mood</span></div>{% endif %}
+        <div class="hero-mascot">{% include 'components/mascot.html' with state='hover' size='lg' label='Лисичка Airish Fox в hero' %}</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section"><div class="mx-auto grid max-w-7xl gap-4 px-4 sm:px-6 md:grid-cols-3 lg:px-8"><div class="benefit">Нежные ткани</div><div class="benefit">Быстрый заказ</div><div class="benefit">Mood-подборки</div></div></section>
+<section class="section">{% include 'components/section_header.html' with eyebrow='Mood collections' title='Выберите настроение' text='Лисичка собрала подборки для прогулок, уютных вечеров, подарков и ярких выходов.' %}<div class="mx-auto mt-10 grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8">{% for mood in moods %}{% include 'components/mood_card.html' %}{% empty %}<p class="empty">Mood-подборки появятся после миграции или добавления в админке.</p>{% endfor %}</div></section>
+{% if daily_pick %}<section class="section"><div class="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[.8fr_1.2fr] lg:px-8"><div>{% include 'components/mascot.html' with state='fox_pick' size='lg' label='Лисичка выбрала образ дня' %}<p class="eyebrow mt-4">Образ дня</p><h2 class="mt-3 text-4xl font-black">{{ daily_pick.name }}</h2><p class="mt-4 text-graphite/70">{{ daily_pick.short_description }}</p><a class="btn-primary mt-6" href="{{ daily_pick.get_absolute_url }}">Посмотреть образ</a></div>{% include 'components/product_card.html' with product=daily_pick %}</div></section>{% endif %}
+<section class="section">{% include 'components/section_header.html' with eyebrow='Лисичка советует' title='Fox picks' text='Фирменная подборка самых характерных вещей Airish Fox.' %}<div class="product-grid">{% for product in fox_pick_products %}{% include 'components/product_card.html' %}{% empty %}<p class="empty">Отметьте товары как “Лисичка советует” в админке.</p>{% endfor %}</div></section>
+<section class="section mint-panel">{% include 'components/section_header.html' with eyebrow='New arrivals' title='Свежие новинки' text='Новые модели подтягиваются по флагу is_new.' %}<div class="product-grid">{% for product in new_products %}{% include 'components/product_card.html' %}{% empty %}<p class="empty">Отметьте товары как новинки в админке.</p>{% endfor %}</div></section>
+<section class="section">{% include 'components/section_header.html' with eyebrow='Популярное' title='Любимые модели' text='Товары отмечаются как популярные в Django Admin.' %}<div class="product-grid">{% for product in featured_products %}{% include 'components/product_card.html' %}{% empty %}<p class="empty">Добавьте популярные товары в админке.</p>{% endfor %}</div></section>
+<section class="section">{% include 'components/section_header.html' with eyebrow='Отзывы' title='Что говорят клиенты' text='Живые впечатления о посадке, цветах и настроении Airish Fox.' %}<div class="mx-auto mt-10 grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-3 lg:px-8">{% for review in reviews %}{% include 'components/review_card.html' %}{% empty %}<p class="empty">Опубликуйте первые отзывы в админке.</p>{% endfor %}</div></section>
+{% include 'components/cta_block.html' %}
+{% endblock %}

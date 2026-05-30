@@ -1,0 +1,4 @@
+<a href="{{ mood.get_absolute_url }}" class="mood-card group" style="--mood-color: {{ mood.color_hex }}">
+  <div class="mood-card__visual">{% if mood.image %}<img src="{{ mood.image.url }}" alt="Mood-подборка {{ mood.name }}" loading="lazy">{% else %}<span>{{ mood.name|slice:':1' }}</span>{% endif %}</div>
+  <div><h3>{{ mood.name }}</h3><p>{{ mood.description|default:'Подборка образов в фирменном настроении Airish Fox.' }}</p></div>
+</a>

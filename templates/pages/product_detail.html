@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load catalog_tags %}
+{% block content %}
+<section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+  <nav class="mb-8 text-sm font-bold text-graphite/60"><a href="{% url 'core:home' %}">Главная</a> / <a href="{% url 'catalog:collection' %}">Коллекция</a> / <span>{{ product.name }}</span></nav>
+  <div class="grid gap-10 lg:grid-cols-[1.05fr_.95fr]">
+    <div class="grid gap-4">
+      <div class="overflow-hidden rounded-[2.5rem] bg-catMint/40">{% if product.main_image %}<img src="{{ product.main_image.url }}" alt="{{ product.name }} — {{ product.color_name }}" class="aspect-[4/5] w-full object-cover">{% else %}<div class="fashion-hero aspect-[4/5]"><span>{{ product.name }}</span></div>{% endif %}</div>
+      {% if product.images.all %}<div class="grid grid-cols-3 gap-3">{% for image in product.images.all %}<img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }}" class="aspect-square rounded-3xl object-cover" loading="lazy">{% endfor %}</div>{% endif %}
+    </div>
+    <article class="card p-6 md:p-8">
+      <div class="flex items-start justify-between gap-4"><div><p class="eyebrow">{{ product.category.name }}</p><h1 class="mt-3 text-4xl font-black sm:text-6xl">{{ product.name }}</h1></div>{% include 'components/mascot.html' with state='fox_pick' size='md' label='Лисичка советует товар' %}</div>
+      <p class="mt-4 text-lg text-graphite/70">{{ product.short_description }}</p>
+      <div class="mt-5 flex flex-wrap gap-2">{% if product.badge %}<span class="badge">{{ product.badge }}</span>{% endif %}{% for mood in product.moods.all %}<a class="pill" href="{{ mood.get_absolute_url }}">{{ mood.name }}</a>{% endfor %}</div>
+      <div class="mt-6 grid gap-3 text-lg"><p><strong>Цена:</strong> {{ product.price|floatformat:0 }} ₽</p><p><strong>Размеры:</strong> {{ product.sizes }}</p><p><strong>Цвет:</strong> <span class="inline-flex items-center gap-2"><i class="color-dot" style="background: {{ product.color_hex }}"></i>{{ product.color_name }}</span></p><p><strong>Наличие:</strong> {% if product.available %}доступен для заказа{% else %}уточняется{% endif %}</p></div>
+      {% if product.description %}<div class="prose-like mt-6">{{ product.description|linebreaks }}</div>{% endif %}
+      <div class="mt-8 flex flex-wrap gap-3">{% quick_order_url product as order_url %}<a class="btn-primary" href="{{ order_url }}" target="_blank" rel="noopener">Хочу этот образ</a><a class="btn-ghost" href="{% url 'contacts:contacts' %}?product={{ product.slug }}">Задать вопрос</a></div>
+    </article>
+  </div>
+</section>
+{% if related_products %}<section class="section">{% include 'components/section_header.html' with eyebrow='Похожие образы' title='Может понравиться' text='Модели из той же категории или mood-подборок.' %}<div class="product-grid">{% for product in related_products %}{% include 'components/product_card.html' %}{% endfor %}</div></section>{% endif %}
+{% endblock %}
