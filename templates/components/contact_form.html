@@ -1,0 +1,11 @@
+<form method="post" action="{{ form_action|default:'' }}" class="card grid gap-4 p-6">
+  {% csrf_token %}
+  {% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
+  {% if selected_product %}<input type="hidden" name="product" value="{{ selected_product.slug }}">{% endif %}
+  <input type="hidden" name="source_page" value="{{ request.get_full_path }}">
+  {% for field in form %}
+    {% if field.name == 'website' %}<div class="honeypot-field" aria-hidden="true">{{ field }}</div>{% else %}<label class="grid gap-2 font-bold">{{ field.label }}{{ field }}{% if field.errors %}<span class="text-sm text-fox">{{ field.errors|striptags }}</span>{% endif %}</label>{% endif %}
+  {% endfor %}
+  {% if form.non_field_errors %}<div class="rounded-2xl bg-softPink/40 p-4 text-sm font-bold text-fox">{{ form.non_field_errors|striptags }}</div>{% endif %}
+  <button class="btn-primary" type="submit">Отправить заявку</button>
+</form>

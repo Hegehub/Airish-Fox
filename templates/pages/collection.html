@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-hero"><p class="eyebrow">Коллекция</p><h1>{% if current_category %}{{ current_category.name }}{% elif current_mood %}{{ current_mood.name }}{% else %}Мини-витрина Airish Fox{% endif %}</h1><p>Фильтруйте по категориям и mood-подборкам, выбирайте модель и быстро заказывайте через мессенджер.</p></section>
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="mb-5"><p class="mb-3 font-black">Категории</p><div class="flex flex-wrap gap-3"><a class="filter-chip {% if not current_category %}active{% endif %}" href="{% url 'catalog:collection' %}{% if current_mood %}?mood={{ current_mood.slug }}{% endif %}">Все</a>{% for category in categories %}<a class="filter-chip {% if current_category == category %}active{% endif %}" href="{% url 'catalog:collection' %}?category={{ category.slug }}{% if current_mood %}&mood={{ current_mood.slug }}{% endif %}">{{ category.name }}</a>{% endfor %}</div></div>
+  <div class="mb-8"><p class="mb-3 font-black">Настроения</p><div class="flex flex-wrap gap-3"><a class="filter-chip {% if not current_mood %}active{% endif %}" href="{% url 'catalog:collection' %}{% if current_category %}?category={{ current_category.slug }}{% endif %}">Все</a>{% for mood in moods %}<a class="filter-chip {% if current_mood == mood %}active{% endif %}" href="{% url 'catalog:collection' %}?{% if current_category %}category={{ current_category.slug }}&{% endif %}mood={{ mood.slug }}">{{ mood.name }}</a>{% endfor %}</div></div>
+  <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">{% for product in products %}{% include 'components/product_card.html' %}{% empty %}{% include 'components/empty_state.html' %}{% endfor %}</div>
+</section>
+{% endblock %}

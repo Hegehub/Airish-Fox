@@ -1,0 +1,6 @@
+<div class="empty-state">
+  {% include 'components/mascot.html' with state='empty' size='lg' label='Лисичка ничего не нашла' %}
+  <h2>Лисичка пока не нашла товары в этой подборке.</h2>
+  <p>Попробуйте другое настроение или загляните в новинки Airish Fox.</p>
+  <a class="btn-primary" href="{% url 'catalog:collection' %}">Смотреть всю коллекцию</a>
+</div>

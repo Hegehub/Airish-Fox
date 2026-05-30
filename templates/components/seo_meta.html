@@ -1,0 +1,14 @@
+{% with title=page_title|default:site_settings.seo_title|default:site_settings.site_name description=meta_description|default:site_settings.seo_description|default:site_settings.short_description %}
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+<meta name="robots" content="index,follow">
+{% if canonical_path %}<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ canonical_path }}">{% endif %}
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site_settings.site_name }}">
+{% if og_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ og_image }}">{% elif site_settings.og_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site_settings.og_image.url }}">{% endif %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ title }}">
+<meta name="twitter:description" content="{{ description }}">
+{% endwith %}
