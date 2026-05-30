@@ -1,0 +1,21 @@
+<header class="sticky top-0 z-40 border-b border-white/70 bg-milk/85 backdrop-blur-xl">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8" aria-label="Главная навигация">
+    <a href="{% url 'core:home' %}" class="flex items-center gap-3 font-black tracking-tight">
+      <span class="grid h-11 w-11 place-items-center rounded-2xl bg-catMint text-2xl shadow-sm">🦊</span>
+      <span class="text-xl">airish-fox</span>
+    </a>
+    <div class="hidden items-center gap-7 text-sm font-bold md:flex">
+      <a class="nav-link" href="{% url 'core:about' %}">О бренде</a>
+      <a class="nav-link" href="{% url 'catalog:collection' %}">Коллекция</a>
+      <a class="nav-link" href="{% url 'catalog:new_arrivals' %}">Новинки</a>
+      <a class="nav-link" href="{% url 'reviews:reviews' %}">Отзывы</a>
+      <a class="btn-primary" href="{% url 'contacts:contacts' %}">Связаться</a>
+    </div>
+    <details class="md:hidden">
+      <summary class="cursor-pointer rounded-2xl bg-white px-4 py-2 font-bold shadow-sm">Меню</summary>
+      <div class="absolute left-4 right-4 mt-4 grid gap-3 rounded-3xl bg-white p-5 shadow-2xl">
+        <a href="{% url 'core:about' %}">О бренде</a><a href="{% url 'catalog:collection' %}">Коллекция</a><a href="{% url 'catalog:new_arrivals' %}">Новинки</a><a href="{% url 'reviews:reviews' %}">Отзывы</a><a href="{% url 'contacts:contacts' %}">Контакты</a>
+      </div>
+    </details>
+  </nav>
+</header>

@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-hero"><p class="eyebrow">Новинки</p><h1>Свежие поступления</h1><p>Grid-витрина всех активных товаров, отмеченных как новинки.</p></section>
+<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">{% for product in products %}{% include 'components/product_card.html' %}{% empty %}<p class="empty">Новинки скоро появятся.</p>{% endfor %}</div></section>
+{% endblock %}

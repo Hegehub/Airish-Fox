@@ -1,0 +1,4 @@
+<a href="{{ category.get_absolute_url }}" class="card group block overflow-hidden p-4">
+  <div class="aspect-[5/3] overflow-hidden rounded-3xl bg-softPink/50">{% if category.image %}<img src="{{ category.image.url }}" alt="Категория {{ category.name }}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">{% else %}<div class="fashion-placeholder h-full"><span>{{ category.name }}</span></div>{% endif %}</div>
+  <h3 class="mt-4 text-xl font-black">{{ category.name }}</h3><p class="mt-2 text-sm text-graphite/65">{{ category.description|default:'Нежная капсула для выразительных образов' }}</p>
+</a>

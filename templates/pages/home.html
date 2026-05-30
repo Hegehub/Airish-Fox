@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero-shell">
+  <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
+    <div>
+      <p class="eyebrow">Cat mint boutique</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight tracking-tight sm:text-7xl">Airish Fox</h1>
+      <p class="mt-5 text-2xl font-bold text-fox">{{ site_settings.slogan }}</p>
+      <p class="mt-5 max-w-xl text-lg text-graphite/70">{{ site_settings.short_description }}</p>
+      <div class="mt-8 flex flex-wrap gap-4"><a class="btn-primary" href="{% url 'catalog:collection' %}">Смотреть коллекцию</a><a class="btn-ghost" href="{% url 'contacts:contacts' %}">Связаться</a></div>
+    </div>
+    <div class="relative">
+      <div class="blob blob-mint"></div><div class="blob blob-orange"></div>
+      <div class="relative rounded-[3rem] bg-white p-4 shadow-2xl">
+        {% if site_settings.hero_image %}<img src="{{ site_settings.hero_image.url }}" alt="Fashion образ Airish Fox" class="aspect-[4/5] w-full rounded-[2.3rem] object-cover">{% else %}<div class="fashion-hero"><span>soft fashion<br>fox mood</span></div>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section"><div class="mx-auto grid max-w-7xl gap-4 px-4 sm:px-6 md:grid-cols-3 lg:px-8"><div class="benefit">Нежные ткани</div><div class="benefit">Яркие акценты</div><div class="benefit">Лимитированные капсулы</div></div></section>
+<section class="section">{% include 'components/section_header.html' with eyebrow='Категории' title='Выберите настроение' text='Капсулы для прогулок, встреч, уютных вечеров и выразительных выходов.' %}<div class="mx-auto mt-10 grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">{% for category in categories %}{% include 'components/category_card.html' %}{% empty %}<p class="empty">Добавьте категории в админке.</p>{% endfor %}</div></section>
+<section class="section">{% include 'components/section_header.html' with eyebrow='Популярное' title='Любимые модели' text='Товары отмечаются как популярные в Django Admin.' %}<div class="product-grid">{% for product in featured_products %}{% include 'components/product_card.html' %}{% empty %}<p class="empty">Добавьте популярные товары в админке.</p>{% endfor %}</div></section>
+<section class="section mint-panel">{% include 'components/section_header.html' with eyebrow='New arrivals' title='Свежие новинки' text='Новые модели подтягиваются по флагу is_new.' %}<div class="product-grid">{% for product in new_products %}{% include 'components/product_card.html' %}{% empty %}<p class="empty">Отметьте товары как новинки в админке.</p>{% endfor %}</div></section>
+<section class="section">{% include 'components/section_header.html' with eyebrow='Отзывы' title='Что говорят клиенты' text='Живые впечатления о посадке, цветах и настроении Airish Fox.' %}<div class="mx-auto mt-10 grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-3 lg:px-8">{% for review in reviews %}{% include 'components/review_card.html' %}{% empty %}<p class="empty">Опубликуйте первые отзывы в админке.</p>{% endfor %}</div></section>
+{% include 'components/cta_block.html' %}
+{% endblock %}
