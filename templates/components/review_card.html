@@ -1,5 +1,0 @@
-<article class="card p-6">
-  <div class="flex items-center justify-between gap-4"><h3 class="text-xl font-black">{{ review.customer_name }}</h3><span class="rounded-full bg-bitcoin/15 px-3 py-1 font-bold text-fox">{{ review.rating }} ★</span></div>
-  <p class="mt-4 text-graphite/70">“{{ review.text }}”</p>
-  <time class="mt-5 block text-sm text-graphite/45" datetime="{{ review.created_at|date:'Y-m-d' }}">{{ review.created_at|date:'d.m.Y' }}</time>
-</article>

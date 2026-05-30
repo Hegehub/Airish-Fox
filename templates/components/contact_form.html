@@ -1,6 +1,0 @@
-<form method="post" action="{{ form_action|default:'' }}" class="card grid gap-4 p-6">
-  {% csrf_token %}
-  {% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
-  {% for field in form %}<label class="grid gap-2 font-bold">{{ field.label }}{{ field }}{% if field.errors %}<span class="text-sm text-fox">{{ field.errors|striptags }}</span>{% endif %}</label>{% endfor %}
-  <button class="btn-primary" type="submit">Отправить заявку</button>
-</form>

@@ -1,8 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-<section class="page-hero"><p class="eyebrow">Коллекция</p><h1>{% if current_category %}{{ current_category.name }}{% else %}Мини-витрина Airish Fox{% endif %}</h1><p>Фильтруйте по категориям и выбирайте модель для заказа через форму связи.</p></section>
-<section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  <div class="mb-8 flex flex-wrap gap-3"><a class="filter-chip {% if not current_category %}active{% endif %}" href="{% url 'catalog:collection' %}">Все</a>{% for category in categories %}<a class="filter-chip {% if current_category == category %}active{% endif %}" href="{{ category.get_absolute_url }}">{{ category.name }}</a>{% endfor %}</div>
-  <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">{% for product in products %}{% include 'components/product_card.html' %}{% empty %}<p class="empty">В этой категории пока нет активных товаров.</p>{% endfor %}</div>
-</section>
-{% endblock %}

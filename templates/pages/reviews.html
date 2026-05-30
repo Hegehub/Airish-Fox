@@ -1,5 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-<section class="page-hero"><p class="eyebrow">Отзывы</p><h1>Клиенты о Airish Fox</h1><p>Отзывы управляются через админку и отображаются только после публикации.</p></section>
-<section class="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8">{% for review in reviews %}{% include 'components/review_card.html' %}{% empty %}<p class="empty">Пока нет опубликованных отзывов.</p>{% endfor %}</section>
-{% endblock %}

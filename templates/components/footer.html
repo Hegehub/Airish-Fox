@@ -1,7 +1,0 @@
-<footer class="mt-20 bg-graphite text-white">
-  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3 lg:px-8">
-    <div><p class="text-2xl font-black">airish-fox</p><p class="mt-3 text-white/70">{{ site_settings.short_description }}</p></div>
-    <div><p class="font-bold text-catMint">Навигация</p><div class="mt-3 grid gap-2 text-white/75"><a href="{% url 'catalog:collection' %}">Коллекция</a><a href="{% url 'catalog:new_arrivals' %}">Новинки</a><a href="{% url 'contacts:contacts' %}">Контакты</a></div></div>
-    <div><p class="font-bold text-catMint">Контакты</p><div class="mt-3 grid gap-2 text-white/75"><span>{{ site_settings.phone|default:'Телефон добавляется в настройках' }}</span><span>{{ site_settings.email|default:'Email добавляется в настройках' }}</span></div></div>
-  </div>
-</footer>
