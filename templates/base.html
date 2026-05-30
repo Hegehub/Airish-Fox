@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include 'components/seo_meta.html' %}
+  {% block extra_meta %}{% endblock %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { catMint: '#B8F2D0', bitcoin: '#F7931A', milk: '#FFF7EA', graphite: '#242424', fox: '#D95F18', softPink: '#FFB6C8' } } } }
+  </script>
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  {% block extra_scripts %}{% endblock %}
+</head>
+<body class="bg-milk text-graphite antialiased {% block body_class %}{% endblock %}">
+  {% include 'components/navbar.html' %}
+  {% if messages %}
+    <div class="fixed right-4 top-24 z-50 space-y-3" aria-live="polite">
+      {% for message in messages %}<div class="flex items-center gap-3 rounded-3xl bg-catMint px-5 py-4 font-semibold shadow-xl">{% include 'components/mascot.html' with state='success' size='sm' label='Заявка отправлена' %}<span>{{ message }}</span></div>{% endfor %}
+    </div>
+  {% endif %}
+  <main>{% block content %}{% endblock %}</main>
+  {% include 'components/footer.html' %}
+</body>
+</html>

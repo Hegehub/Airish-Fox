@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: airish_fox
+      POSTGRES_USER: airish_fox
+      POSTGRES_PASSWORD: airish_fox
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airish_fox -d airish_fox"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.dev
+      SECRET_KEY: dev-airish-fox-secret-key
+      DEBUG: "True"
+      ALLOWED_HOSTS: 127.0.0.1,localhost,0.0.0.0
+      CSRF_TRUSTED_ORIGINS: http://127.0.0.1:8000,http://localhost:8000
+      DATABASE_URL: postgresql://airish_fox:airish_fox@postgres:5432/airish_fox
+    volumes:
+      - .:/app
+      - media_data:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  media_data:

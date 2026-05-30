@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-hero"><p class="eyebrow">Контакты</p><h1>Напишите нам</h1><p>{% if selected_product %}Вы выбрали: {{ selected_product.name }}. {% endif %}Подскажем наличие, размер, цвет и поможем собрать Airish Fox образ.</p></section>
+<section class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
+  <aside class="card p-8"><div class="flex items-center gap-4">{% include 'components/mascot.html' with state='idle' size='md' label='Лисичка на связи' %}<h2 class="text-3xl font-black">Где нас найти</h2></div><div class="mt-6 grid gap-3 text-graphite/75">{% if site_settings.telegram_url %}<a href="{{ site_settings.telegram_url }}">Telegram</a>{% endif %}{% if site_settings.whatsapp_url %}<a href="{{ site_settings.whatsapp_url }}">WhatsApp</a>{% endif %}{% if site_settings.instagram_url %}<a href="{{ site_settings.instagram_url }}">Instagram</a>{% endif %}<span>{{ site_settings.email|default:'email добавляется в настройках' }}</span><span>{{ site_settings.phone|default:'телефон добавляется в настройках' }}</span></div></aside>
+  {% include 'components/contact_form.html' with form=form selected_product=selected_product %}
+</section>
+{% endblock %}
