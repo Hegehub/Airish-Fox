@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="catalog-hero catalog-hero--mood container" style="--mood-color: {{ mood.color_hex }}">
+  <p class="eyebrow">Mood collection</p>
+  <h1>{{ mood.name }}</h1>
+  <p>{{ mood.description|default:"Mood-подборка Airish Fox." }}</p>
+</section>
+<section class="container catalog-section">
+  {% if products %}
+    <div class="product-grid">
+      {% for product in products %}{% include "components/product_card.html" with product=product %}{% endfor %}
+    </div>
+  {% else %}
+    {% include "components/empty_state.html" with title="Лисичка пока не нашла товары в этой mood-подборке" message="Попробуйте другую подборку или вернитесь позже." %}
+  {% endif %}
+</section>
+{% endblock %}

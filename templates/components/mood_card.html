@@ -1,0 +1,6 @@
+{% load static %}
+<a class="mood-card" href="{% url 'catalog:product_list' %}?mood={{ mood.slug }}" style="--mood-color: {{ mood.color_hex }}">
+  <span class="mood-card__dot"></span><span class="mood-card__mark" aria-hidden="true"><img src="{% static 'images/brand/fox-mark.svg' %}" alt="" loading="lazy"></span>
+  <h3>{{ mood.name }}</h3>
+  <p>{{ mood.description|default:"Mood-подборка Airish Fox." }}</p>
+</a>

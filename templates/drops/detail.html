@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="brand-page container">
+  <div class="store-hero"><div><p class="eyebrow">Limited Drop</p><h1>{{ drop.name }}</h1><p>{{ drop.description }}</p>{% if drop.show_countdown %}<p class="product-badge">Доступно до {{ drop.ends_at|date:"d.m.Y H:i" }}</p>{% endif %}</div>{% if drop.hero_image %}<img class="store-detail-hero__image" src="{{ drop.hero_image.url }}" alt="{{ drop.name }}" loading="lazy">{% else %}{% include "components/mascot.html" with state="fox_pick" size="large" label="Airish Fox drop mascot" %}{% endif %}</div>
+  {% if drop.waitlist_enabled %}<form method="post" action="{% url 'drops:waitlist' drop.slug %}" class="checkout-panel">{% csrf_token %}<h2>Waitlist</h2><label class="form-field"><span>Email</span><input class="form-control" type="email" name="email" required></label><label class="form-field"><span>Имя</span><input class="form-control" type="text" name="name"></label><button class="button button--primary" type="submit">Записаться</button></form>{% endif %}
+  {% if products %}<div class="product-grid product-grid--compact">{% for product in products %}{% include "components/product_card.html" with product=product %}{% endfor %}</div>{% else %}{% include "components/empty_state.html" with title="Товары drop скоро появятся" message="Загляните позже." %}{% endif %}
+</section>
+{% endblock %}

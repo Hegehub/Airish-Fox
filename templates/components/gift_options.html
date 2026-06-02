@@ -1,0 +1,12 @@
+<section class="checkout-panel">
+  <div class="gift-mode-heading"><h2>Подарочный режим</h2>{% include "components/mascot.html" with state="gift" size="sm" label="Airish Fox gift mascot" class="mascot--float" %}</div>
+  <p class="muted">Подарочные опции сохраняются в заказе. Стоимость упаковки пока не добавляется.</p>
+  {% for field in form %}
+    {% if field.name == "is_gift" or field.name == "gift_wrap" or field.name == "gift_message" or field.name == "hide_price_in_package" %}
+      <label class="form-field {% if field.field.widget.input_type == 'checkbox' %}form-field--checkbox{% endif %}" for="{{ field.id_for_label }}">
+        <span>{{ field.label }}</span>
+        {{ field }}
+      </label>
+    {% endif %}
+  {% endfor %}
+</section>

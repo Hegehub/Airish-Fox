@@ -1,0 +1,5 @@
+<section class="empty-state">
+  {% if state %}{% include "components/mascot.html" with state=state size="medium" label="Airish Fox empty state mascot" %}{% else %}{% include "components/mascot.html" with state="thinking" size="medium" label="Airish Fox empty state mascot" %}{% endif %}
+  <h3>{{ title|default:"Лисичка пока не нашла товары" }}</h3>
+  <p>{{ message|default:"Попробуйте другой фильтр или загляните позже." }}</p>
+</section>

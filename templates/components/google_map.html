@@ -1,0 +1,19 @@
+{% if google_maps_api_key and store.latitude and store.longitude %}
+  <section class="store-map-card">
+    <div class="store-map" data-google-map data-lat="{{ store.latitude }}" data-lng="{{ store.longitude }}" data-title="{{ store.name }}" data-address="{{ store.get_display_address }}" data-map-id="{{ google_maps_map_id }}" data-zoom="{{ google_maps_default_zoom|default:15 }}" aria-label="Google Map: {{ store.name }}"></div>
+    <noscript>
+      <div class="store-map-fallback"><p>JavaScript отключён. Используйте кнопку маршрута ниже.</p></div>
+    </noscript>
+  </section>
+{% else %}
+  <section class="store-map-fallback">
+    <p class="eyebrow">Map fallback</p>
+    <h3>{{ store.name }}</h3>
+    <p>{{ store.get_display_address }}</p>
+    {% if store.latitude and store.longitude %}<p class="muted">Координаты: {{ store.latitude }}, {{ store.longitude }}</p>{% endif %}
+    <div class="store-actions">
+      <a class="button button--primary" href="{{ store.get_directions_url }}" target="_blank" rel="noopener">Построить маршрут</a>
+      {% if store.google_maps_place_url %}<a class="button button--secondary" href="{{ store.google_maps_place_url }}" target="_blank" rel="noopener">Открыть в Google Maps</a>{% endif %}
+    </div>
+  </section>
+{% endif %}

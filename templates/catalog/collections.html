@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="catalog-hero container">
+  <p class="eyebrow">Collections</p>
+  <h1>{{ page_title }}</h1>
+  <p>{{ meta_description }}</p>
+</section>
+<section class="container catalog-section">
+  {% if collections %}
+    <div class="collection-grid">
+      {% for collection in collections %}{% include "components/collection_card.html" with collection=collection %}{% endfor %}
+    </div>
+  {% else %}
+    {% include "components/empty_state.html" with title="Коллекции скоро появятся" message="Airish Fox готовит первые fashion-капсулы." %}
+  {% endif %}
+</section>
+{% endblock %}

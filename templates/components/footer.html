@@ -1,0 +1,28 @@
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div>
+      {% include "components/brand_logo.html" %}
+      <p class="site-footer__text">{{ brand_description }}</p>
+    </div>
+    <div class="site-footer__links" aria-label="Разделы каталога">
+      <a href="{% url 'catalog:product_list' %}">Каталог</a>
+      <a href="{% url 'catalog:new_arrivals' %}">Новинки</a>
+      <a href="{% url 'catalog:collection_list' %}">Коллекции</a>
+      <a href="{% url 'store_locator:store_list' %}">Магазин</a>
+      <a href="{% url 'drops:list' %}">Drops</a>
+      <a href="{% url 'style_quiz:start' %}">Style Quiz</a>
+    </div>
+    <div class="site-footer__links" aria-label="Магазин">
+      <strong>Магазин</strong>
+      {% if footer_main_store %}
+        <span>{{ footer_main_store.get_display_address }}</span>
+        <a href="{{ footer_main_store.get_directions_url }}" target="_blank" rel="noopener">Построить маршрут</a>
+      {% else %}
+        <a href="{% url 'store_locator:store_list' %}">Скоро во Вьетнаме</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="container site-footer__bottom">
+    <span>© {% now "Y" %} Airish Fox. Все права защищены.</span>
+  </div>
+</footer>

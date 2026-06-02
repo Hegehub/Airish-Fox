@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="brand-page container">
+  <div class="store-hero"><div><p class="eyebrow">Limited Drops</p><h1>Airish Fox Drops</h1><p>Лимитированные капсулы, waitlist и лисий countdown.</p></div>{% include "components/mascot.html" with state="happy" size="large" label="Airish Fox drops mascot" %}</div>
+  <div class="store-grid">
+    {% for drop in drops %}<article class="store-card"><div class="store-card__image">{% if drop.hero_image %}<img src="{{ drop.hero_image.url }}" alt="{{ drop.name }}" loading="lazy">{% else %}{% include "components/mascot.html" with state="fox_pick" size="medium" label="Airish Fox drop" %}{% endif %}</div><div class="store-card__content"><h2><a href="{{ drop.get_absolute_url }}">{{ drop.name }}</a></h2><p>{{ drop.description|default:"Лимитированный drop Airish Fox." }}</p>{% if drop.show_countdown %}<p class="muted">До: {{ drop.ends_at|date:"d.m.Y H:i" }}</p>{% endif %}<a class="button button--secondary" href="{{ drop.get_absolute_url }}">Подробнее</a></div></article>{% empty %}{% include "components/empty_state.html" with title="Drops скоро появятся" message="Лисичка готовит лимитированную капсулу." %}{% endfor %}
+  </div>
+</section>
+{% endblock %}

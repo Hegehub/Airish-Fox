@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="account-layout container">
+  {% include "components/account_sidebar.html" %}
+  <div class="account-main account-panel">
+    <p class="eyebrow">Delete address</p>
+    <h1>Удалить адрес?</h1>
+    <p>Адрес получателя <strong>{{ object.full_name }}</strong> будет удалён из вашего кабинета.</p>
+    <form method="post" class="form-actions">
+      {% csrf_token %}
+      <button class="button button--primary" type="submit">Удалить</button>
+      <a class="button button--secondary" href="{% url 'accounts:address_list' %}">Отмена</a>
+    </form>
+  </div>
+</section>
+{% endblock %}

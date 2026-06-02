@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="account-layout container">
+  {% include "components/account_sidebar.html" %}
+  <div class="account-main">
+    <div class="account-hero">
+      <p class="eyebrow">Personal cabinet</p>
+      <h1>Привет, {{ request.user.get_username }}</h1>
+      <p>Здесь хранится основа будущего shopping experience: профиль, size memory и адреса доставки.</p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="{% url 'catalog:product_list' %}">Перейти в каталог</a>
+        <a class="button button--secondary" href="{% url 'accounts:profile' %}">Редактировать профиль</a>
+        <a class="button button--ghost" href="{% url 'accounts:address_create' %}">Добавить адрес</a>
+      </div>
+    </div>
+
+    <div class="account-grid">
+      <article class="account-panel">
+        <h2>Профиль</h2>
+        <dl class="account-data">
+          <div><dt>Email</dt><dd>{{ request.user.email|default:"Не указан" }}</dd></div>
+          <div><dt>Телефон</dt><dd>{{ profile.phone|default:"Не указан" }}</dd></div>
+          <div><dt>Размер верха</dt><dd>{{ profile.preferred_size_top|default:"—" }}</dd></div>
+          <div><dt>Размер низа</dt><dd>{{ profile.preferred_size_bottom|default:"—" }}</dd></div>
+          <div><dt>Посадка</dt><dd>{{ profile.get_preferred_fit_display|default:"—" }}</dd></div>
+          <div><dt>Любимый mood</dt><dd>{{ profile.favorite_mood|default:"—" }}</dd></div>
+        </dl>
+      </article>
+
+      <article class="account-panel">
+        <h2>Default shipping</h2>
+        {% if default_shipping_address %}
+          {% include "components/address_card.html" with address=default_shipping_address %}
+        {% else %}
+          {% include "components/empty_state.html" with title="Адрес доставки пока не добавлен" message="Добавьте адрес, чтобы будущее оформление заказа было быстрее." %}
+        {% endif %}
+      </article>
+
+      <article class="account-panel">
+        <h2>История заказов</h2>
+        <p class="muted">Заказы появятся здесь на будущем этапе после подключения оформления заказа.</p>
+      </article>
+
+      <article class="account-panel">
+        <h2>Сохранённые идеи</h2>
+        <p class="muted">Персональные подборки и сохранённые товары будут добавлены позже.</p>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %}

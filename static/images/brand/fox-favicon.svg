@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Airish Fox favicon</title>
+  <rect width="64" height="64" rx="16" fill="#FFF7EA"/>
+  <path fill="#D95F18" d="M10 12 24 24l8-10 8 10 14-12-6 30c-2 8-8 13-16 13s-14-5-16-13l-6-30Z"/>
+  <path fill="#F7931A" d="M24 24 32 14l8 10-3 19H27l-3-19Z"/>
+  <path fill="#B8F2D0" d="M19 40h26c-2 6-6.5 10-13 10s-11-4-13-10Z"/>
+  <path fill="#242424" d="M25 33a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm14 0a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+</svg>

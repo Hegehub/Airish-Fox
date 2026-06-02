@@ -1,0 +1,14 @@
+<article class="address-card">
+  <div class="address-card__header">
+    <h3>{{ address.full_name }}</h3>
+    {% if address.is_default_shipping %}<span class="product-badge product-badge--mint">Default shipping</span>{% endif %}
+  </div>
+  <p><strong>{{ address.phone }}</strong></p>
+  <p>{{ address.street_address }}, {{ address.ward }} {{ address.district }} {{ address.city }}, {{ address.country }}</p>
+  {% if address.postal_code %}<p>Индекс: {{ address.postal_code }}</p>{% endif %}
+  {% if address.delivery_notes %}<p class="muted">{{ address.delivery_notes }}</p>{% endif %}
+  <div class="address-card__actions">
+    <a class="button button--secondary" href="{% url 'accounts:address_update' address.pk %}">Редактировать</a>
+    <a class="button button--ghost" href="{% url 'accounts:address_delete' address.pk %}">Удалить</a>
+  </div>
+</article>

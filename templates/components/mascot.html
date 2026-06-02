@@ -1,0 +1,14 @@
+{% load static %}
+{% with current_state=state|default:"idle" current_size=size|default:"md" %}
+  {% if current_state == "happy" %}{% static "images/brand/mascot/fox-happy.svg" as mascot_src %}
+  {% elif current_state == "thinking" %}{% static "images/brand/mascot/fox-thinking.svg" as mascot_src %}
+  {% elif current_state == "cart_empty" or current_state == "empty" %}{% static "images/brand/mascot/fox-cart-empty.svg" as mascot_src %}
+  {% elif current_state == "payment_success" %}{% static "images/brand/mascot/fox-payment-success.svg" as mascot_src %}
+  {% elif current_state == "gift" %}{% static "images/brand/mascot/fox-gift.svg" as mascot_src %}
+  {% elif current_state == "map_guide" %}{% static "images/brand/mascot/fox-map-guide.svg" as mascot_src %}
+  {% elif current_state == "fox_pick" %}{% static "images/brand/mascot/fox-pick.svg" as mascot_src %}
+  {% else %}{% static "images/brand/mascot/fox-idle.svg" as mascot_src %}{% endif %}
+  <figure class="mascot mascot--{{ current_state }} mascot--{{ current_size }} {{ class|default:'' }}" aria-label="{{ label|default:'Airish Fox mascot' }}">
+    <img class="mascot__image" src="{{ mascot_src|default:'/static/images/brand/fox-mascot-idle.svg' }}" alt="{{ label|default:'Airish Fox mascot' }}" loading="lazy" onerror="this.onerror=null;this.src='{% static 'images/brand/fox-mascot-idle.svg' %}';">
+  </figure>
+{% endwith %}

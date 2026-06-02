@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="brand-page container">
+  <div class="section-heading section-heading--row"><div><p class="eyebrow">Wishlist</p><h1>Избранное</h1></div><a class="button button--secondary" href="{% url 'catalog:product_list' %}">В каталог</a></div>
+  {% if wishlist_items %}
+    <div class="product-grid product-grid--compact">
+      {% for item in wishlist_items %}
+        <div>{% include "components/product_card.html" with product=item.product %}<form method="post" action="{% url 'wishlist:remove' item.product.id %}">{% csrf_token %}<button class="button button--secondary" type="submit">Удалить</button></form></div>
+      {% endfor %}
+    </div>
+  {% else %}
+    {% include "components/empty_state.html" with title="Избранное пустое" message="Лисичка пока ничего не отложила. Добавьте понравившиеся образы." state="thinking" %}
+  {% endif %}
+</section>
+{% endblock %}

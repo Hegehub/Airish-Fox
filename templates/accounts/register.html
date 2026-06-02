@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="auth-page container">
+  <div class="auth-card">
+    <div>
+      <p class="eyebrow">Account</p>
+      <h1>Регистрация</h1>
+      <p>Создайте профиль покупателя Airish Fox для будущей истории заказов, адресов и size memory.</p>
+    </div>
+    {% include "components/mascot.html" with state="happy" size="medium" label="Airish Fox registration mascot" %}
+    <form method="post" class="account-form" novalidate>
+      {% csrf_token %}
+      {% include "components/form_errors.html" with form=form %}
+      {% for field in form %}
+        <label class="form-field" for="{{ field.id_for_label }}">
+          <span>{{ field.label }}</span>
+          {{ field }}
+          {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+        </label>
+      {% endfor %}
+      <button class="button button--primary" type="submit">Зарегистрироваться</button>
+    </form>
+    <p class="auth-switch">Уже есть аккаунт? <a href="{% url 'accounts:login' %}">Войти</a></p>
+  </div>
+</section>
+{% endblock %}

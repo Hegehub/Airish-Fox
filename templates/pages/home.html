@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero container">
+  <div class="hero__content">
+    <p class="eyebrow">Bright boutique catalog</p>
+    <h1>Airish Fox</h1>
+    <p class="hero__tagline">{{ brand_tagline }}</p>
+    <p class="hero__description">{{ brand_description }} Теперь foundation расширен каталогом с вариантами, mood-подборками и коллекциями.</p>
+    <div class="hero__actions">
+      <a class="button button--primary" href="{% url 'catalog:product_list' %}">Смотреть каталог</a>
+      <a class="button button--secondary" href="{% url 'catalog:new_arrivals' %}">Новинки</a>
+    </div>
+  </div>
+  <div class="hero__visual">
+    {% include "components/mascot.html" with state="idle" size="large" label="Airish Fox mascot" %}
+  </div>
+</section>
+
+<section class="container catalog-section" aria-labelledby="featured-title">
+  <div class="section-heading section-heading--row">
+    <div>
+      <p class="eyebrow">Featured</p>
+      <h2 id="featured-title">Избранные товары</h2>
+    </div>
+    <a class="text-link" href="{% url 'catalog:product_list' %}">В каталог</a>
+  </div>
+  {% if featured_products %}
+    <div class="product-grid product-grid--compact">
+      {% for product in featured_products %}{% include "components/product_card.html" with product=product %}{% endfor %}
+    </div>
+  {% else %}
+    {% include "components/empty_state.html" with title="Избранные товары скоро появятся" message="Лисичка пока готовит витрину featured products." %}
+  {% endif %}
+</section>
+
+<section class="container catalog-section" aria-labelledby="new-title">
+  <div class="section-heading section-heading--row">
+    <div>
+      <p class="eyebrow">New arrivals</p>
+      <h2 id="new-title">Новинки</h2>
+    </div>
+    <a class="text-link" href="{% url 'catalog:new_arrivals' %}">Все новинки</a>
+  </div>
+  {% if new_products %}
+    <div class="product-grid product-grid--compact">
+      {% for product in new_products %}{% include "components/product_card.html" with product=product %}{% endfor %}
+    </div>
+  {% else %}
+    {% include "components/empty_state.html" with title="Новинки скоро появятся" message="Первые товары будут отмечены как new в админке." %}
+  {% endif %}
+</section>
+
+{% if homepage_story_blocks %}
+<section class="container catalog-section brand-story-grid" aria-labelledby="story-title">
+  <div class="section-heading"><p class="eyebrow">Brand story</p><h2 id="story-title">Airish Fox stories</h2></div>
+  <div class="store-grid">{% for story in homepage_story_blocks %}{% include "components/story_block.html" with story=story %}{% endfor %}</div>
+</section>
+{% endif %}
+
+<section class="container catalog-section" aria-labelledby="moods-title">
+  <div class="section-heading">
+    <p class="eyebrow">Mood shopping</p>
+    <h2 id="moods-title">Выберите настроение</h2>
+  </div>
+  {% if home_moods %}
+    <div class="mood-grid">
+      {% for mood in home_moods %}{% include "components/mood_card.html" with mood=mood %}{% endfor %}
+    </div>
+  {% else %}
+    {% include "components/empty_state.html" with title="Mood-подборки скоро появятся" message="Mint Mood, Orange Mood и Fox Pick ждут настройки в админке." %}
+  {% endif %}
+</section>
+
+<section class="container catalog-section" aria-labelledby="fox-title">
+  <div class="section-heading section-heading--row">
+    <div><p class="eyebrow">Fox picks</p><h2 id="fox-title">Лисичка советует</h2></div>
+    {% include "components/mascot.html" with state="fox_pick" size="sm" label="Airish Fox pick mascot" class="mascot--float" %}
+  </div>
+  {% if fox_pick_products %}
+    <div class="product-grid product-grid--compact">
+      {% for product in fox_pick_products %}{% include "components/product_card.html" with product=product %}{% endfor %}
+    </div>
+  {% else %}
+    {% include "components/empty_state.html" with title="Fox picks скоро появятся" message="Отметьте товары как fox pick, чтобы показать их на главной." %}
+  {% endif %}
+</section>
+{% endblock %}
