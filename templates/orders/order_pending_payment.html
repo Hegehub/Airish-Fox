@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load money %}
+
+{% block content %}
+<section class="order-page container">
+  <div class="account-hero order-pending-hero">
+    {% include "components/mascot.html" with state="idle" size="medium" label="Airish Fox pending payment mascot" %}
+    <p class="eyebrow">Pending payment</p>
+    <h1>Заказ создан и ожидает оплаты</h1>
+    <p>Номер заказа: <strong>{{ order.number }}</strong>. Нажмите кнопку ниже, чтобы перейти на защищённую страницу онлайн-оплаты.</p>
+    <form method="post" action="{% url 'payments:antom_create' order.number %}" class="form-actions">
+      {% csrf_token %}
+      <button class="button button--primary" type="submit">Оплатить картой / онлайн</button>
+      <span class="muted">Оплата откроется на защищённой странице платёжного провайдера.</span>
+    </form>
+  </div>
+  <div class="checkout-layout">
+    <div class="checkout-main">
+      <section class="checkout-panel">
+        <h2>Товары</h2>
+        {% for item in order.items.all %}
+          <article class="checkout-mini-item">
+            <span>{{ item.product_name }} · {{ item.size }} · {{ item.color_name }} × {{ item.quantity }}</span>
+            <strong>{{ item.line_total|money_vnd }}</strong>
+          </article>
+        {% endfor %}
+      </section>
+      <section class="checkout-panel">
+        <h2>Доставка</h2>
+        <p>{{ order.full_name }} · {{ order.phone }}</p>
+        <p>{{ order.shipping_street_address }}, {{ order.shipping_district }} {{ order.shipping_city }}, {{ order.shipping_country }}</p>
+        <p>Способ: {{ order.shipping_method_name }}</p>
+      </section>
+      {% if order.is_gift %}
+        <section class="checkout-panel"><h2>Gift info</h2><p>{{ order.gift_message|default:"Подарочный заказ" }}</p></section>
+      {% endif %}
+    </div>
+    {% include "components/order_summary.html" with order=order %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% if variant %}
+  <span class="product-price" data-price-value>{{ variant.price }} ₫</span>
+  {% if variant.compare_at_price %}<span class="product-price product-price--compare" data-compare-price-value>{{ variant.compare_at_price }} ₫</span>{% endif %}
+{% elif product.get_min_price %}
+  <span class="product-price">от {{ product.get_min_price }} ₫</span>
+{% else %}
+  <span class="product-price product-price--muted">Цена скоро</span>
+{% endif %}

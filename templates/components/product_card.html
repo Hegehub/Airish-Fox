@@ -1,0 +1,32 @@
+<article class="product-card">
+  <a class="product-card__image" href="{{ product.get_absolute_url }}" aria-label="Подробнее о {{ product.name }}">
+    {% with main_image=product.get_main_image %}
+      {% if main_image %}
+        <img src="{{ main_image.image.url }}" alt="{{ main_image.alt_text|default:product.name }}" loading="lazy">
+      {% else %}
+        {% include "components/mascot.html" with state="thinking" size="sm" label="Airish Fox product placeholder" %}
+      {% endif %}
+    {% endwith %}
+  </a>
+  <div class="product-card__body">
+    {% include "components/product_badges.html" with product=product %}
+    <p class="product-card__category">{{ product.category.name }}</p>
+    <h3><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+    <p>{{ product.short_description }}</p>
+    {% include "components/product_price.html" with product=product %}
+    <div class="product-card__variants" aria-label="Цвета и размеры">
+      <div class="color-dots">
+        {% for variant in product.get_active_variants %}
+          <span class="color-dot" title="{{ variant.color_name }}" style="--dot-color: {{ variant.color_hex }}"></span>
+        {% endfor %}
+      </div>
+      <div class="size-list">
+        {% for variant in product.get_active_variants %}<span>{{ variant.size }}</span>{% endfor %}
+      </div>
+    </div>
+    <p class="stock-hint {% if product.is_available %}stock-hint--in{% else %}stock-hint--out{% endif %}">
+      {% if product.is_available %}В наличии{% else %}Нет в наличии{% endif %}
+    </p>
+    <div class="product-card__actions"><a class="button button--secondary product-card__button" href="{{ product.get_absolute_url }}">Подробнее</a>{% include "components/wishlist_button.html" with product=product %}</div>
+  </div>
+</article>

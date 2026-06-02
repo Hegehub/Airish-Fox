@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="brand-page container">
+  <div class="store-hero">
+    <div><p class="eyebrow">Fox Style Quiz</p><h1>Подберём настроение образа</h1><p>Без AI и внешних API: только ваши ответы, mood-подборки и лисий вкус Airish Fox.</p></div>
+    {% include "components/mascot.html" with state="thinking" size="large" label="Airish Fox style quiz mascot" class="mascot--float" %}
+  </div>
+  {% if questions %}
+    <form method="post" class="quiz-form">
+      {% csrf_token %}
+      {% for question in questions %}
+        <fieldset class="checkout-panel quiz-question">
+          <legend><strong>{{ question.title }}</strong></legend>
+          {% if question.help_text %}<p class="muted">{{ question.help_text }}</p>{% endif %}
+          <div class="quiz-options">
+            {% for option in question.options.all %}{% if option.is_active %}
+              <label class="quiz-option"><input type="radio" name="question_{{ question.pk }}" value="{{ option.pk }}"> <span>{{ option.label }}</span></label>
+            {% endif %}{% endfor %}
+          </div>
+        </fieldset>
+      {% endfor %}
+      <button class="button button--primary" type="submit">Показать подборку</button>
+    </form>
+  {% else %}
+    {% include "components/empty_state.html" with title="Quiz скоро появится" message="Лисичка готовит вопросы о вашем стиле." %}
+  {% endif %}
+</section>
+{% endblock %}

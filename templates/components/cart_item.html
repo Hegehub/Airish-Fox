@@ -1,0 +1,37 @@
+<article class="cart-item">
+  <a class="cart-item__image" href="{{ item.variant.product.get_absolute_url }}">
+    {% with image=item.variant.product.get_main_image %}
+      {% if image %}
+        <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:item.variant.product.name }}" loading="lazy">
+      {% else %}
+        {% include "components/mascot.html" with state="empty" size="small" label="Airish Fox cart item placeholder" %}
+      {% endif %}
+    {% endwith %}
+  </a>
+  <div class="cart-item__content">
+    <div>
+      <p class="product-card__category">{{ item.variant.product.category.name }}</p>
+      <h3><a href="{{ item.variant.product.get_absolute_url }}">{{ item.variant.product.name }}</a></h3>
+      <p class="muted">Размер: {{ item.variant.size }} · Цвет: {{ item.variant.color_name }}</p>
+      <p class="product-price">{{ item.unit_price_snapshot }} ₫</p>
+      {% if not item.variant.product.is_active or not item.variant.is_active %}
+        <p class="cart-warning">Товар стал недоступен.</p>
+      {% elif item.variant.stock_quantity < item.quantity %}
+        <p class="cart-warning">Доступно только {{ item.variant.stock_quantity }} шт.</p>
+      {% endif %}
+    </div>
+    <div class="cart-item__actions">
+      <form method="post" action="{% url 'cart:update' item.id %}" class="cart-quantity-form">
+        {% csrf_token %}
+        <label for="quantity-{{ item.id }}">Количество</label>
+        <input id="quantity-{{ item.id }}" class="form-control" type="number" name="quantity" min="1" max="{{ item.variant.stock_quantity }}" value="{{ item.quantity }}">
+        <button class="button button--secondary" type="submit">Обновить</button>
+      </form>
+      <p class="cart-line-total">{{ item.get_line_total }} ₫</p>
+      <form method="post" action="{% url 'cart:remove' item.id %}">
+        {% csrf_token %}
+        <button class="button button--ghost" type="submit">Удалить</button>
+      </form>
+    </div>
+  </div>
+</article>

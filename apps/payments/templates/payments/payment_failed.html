@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="payment-page container">
+  <div class="account-hero">
+    {% include "components/mascot.html" with state="empty" size="medium" label="Airish Fox payment failed mascot" %}
+    <p class="eyebrow">Payment failed</p>
+    <h1>Оплата не запущена</h1>
+    <p>{{ error_message|default:"Не удалось подготовить оплату. Попробуйте ещё раз или обратитесь в поддержку." }}</p>
+    {% if order %}<a class="button button--primary" href="{{ order.get_absolute_url }}">Вернуться к заказу</a>{% endif %}
+    <a class="button button--secondary" href="{% url 'core:home' %}#contacts-soon">Контакты</a>
+  </div>
+</section>
+{% endblock %}

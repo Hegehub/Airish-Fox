@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="catalog-hero container">
+  <p class="eyebrow">Catalog core</p>
+  <h1>{{ page_title }}</h1>
+  <p>{{ meta_description|default:"Одежда Airish Fox по категориям, mood-подборкам и коллекциям." }}</p>
+</section>
+
+<section class="catalog-layout container">
+  <aside class="catalog-filters" aria-label="Фильтры каталога">
+    <h2>Фильтры</h2>
+    <a class="filter-chip" href="{% url 'catalog:product_list' %}">Все товары</a>
+    <a class="filter-chip" href="{% url 'catalog:product_list' %}?new=1">Новинки</a>
+    <a class="filter-chip" href="{% url 'catalog:product_list' %}?fox_pick=1">Fox Pick</a>
+
+    <h3>Категории</h3>
+    {% for category in categories %}
+      <a class="filter-chip {% if current_category == category %}filter-chip--active{% endif %}" href="{% url 'catalog:product_list' %}?category={{ category.slug }}">{{ category.name }}</a>
+    {% empty %}<p class="muted">Категории скоро появятся.</p>{% endfor %}
+
+    <h3 id="mood-filters">Настроения</h3>
+    {% for mood in moods %}
+      <a class="filter-chip {% if current_mood == mood %}filter-chip--active{% endif %}" href="{% url 'catalog:product_list' %}?mood={{ mood.slug }}">{{ mood.name }}</a>
+    {% empty %}<p class="muted">Mood-подборки скоро появятся.</p>{% endfor %}
+
+    <h3>Коллекции</h3>
+    {% for collection in collections %}
+      <a class="filter-chip {% if current_collection == collection %}filter-chip--active{% endif %}" href="{% url 'catalog:product_list' %}?collection={{ collection.slug }}">{{ collection.name }}</a>
+    {% empty %}<p class="muted">Коллекции скоро появятся.</p>{% endfor %}
+  </aside>
+
+  <div>
+    {% if products %}
+      <div class="product-grid">
+        {% for product in products %}
+          {% include "components/product_card.html" with product=product %}
+        {% endfor %}
+      </div>
+      {% if is_paginated %}
+        <nav class="pagination" aria-label="Пагинация каталога">
+          {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">Назад</a>{% endif %}
+          <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Вперёд</a>{% endif %}
+        </nav>
+      {% endif %}
+    {% else %}
+      {% include "components/empty_state.html" with title="Лисичка пока не нашла товары в этой подборке" message="Лисичка пока не нашла товары в этом настроении. Попробуйте другую подборку." state="thinking" %}
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

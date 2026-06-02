@@ -1,0 +1,11 @@
+Django>=5.2,<5.3
+psycopg[binary]
+python-dotenv
+Pillow
+gunicorn
+dj-database-url
+whitenoise
+requests
+cryptography
+
+celery>=5.4,<6

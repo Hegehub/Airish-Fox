@@ -1,0 +1,18 @@
+<article class="store-card">
+  <div class="store-card__image">
+    {% if store.image %}<img src="{{ store.image.url }}" alt="{{ store.name }}" loading="lazy">{% else %}{% include "components/mascot.html" with state="map_guide" size="medium" label="Airish Fox store guide" %}{% endif %}
+  </div>
+  <div class="store-card__content">
+    <p class="eyebrow">{{ store.city }}</p>
+    <h2><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></h2>
+    <p>{{ store.short_description|default:store.get_display_address }}</p>
+    <div class="store-badges">
+      {% if store.pickup_available %}<span>Самовывоз доступен</span>{% endif %}
+      {% if store.fitting_available %}<span>Примерка доступна</span>{% endif %}
+    </div>
+    <div class="store-actions">
+      <a class="button button--primary" href="{{ store.get_directions_url }}" target="_blank" rel="noopener">Построить маршрут</a>
+      <a class="button button--secondary" href="{{ store.get_absolute_url }}">Подробнее</a>
+    </div>
+  </div>
+</article>

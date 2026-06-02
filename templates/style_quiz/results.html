@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="brand-page container">
+  <div class="store-hero">
+    <div><p class="eyebrow">Quiz result</p><h1>Ваша подборка готова</h1><p>Лисичка собрала направление — осталось открыть каталог.</p><a class="button button--primary" href="{{ result_url }}">Перейти к подборке</a></div>
+    {% include "components/mascot.html" with state="happy" size="large" label="Airish Fox happy mascot" class="mascot--soft-bounce" %}
+  </div>
+</section>
+{% endblock %}

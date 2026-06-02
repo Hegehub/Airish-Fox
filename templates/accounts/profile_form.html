@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="account-layout container">
+  {% include "components/account_sidebar.html" %}
+  <div class="account-main account-panel">
+    <p class="eyebrow">Profile</p>
+    <h1>Профиль покупателя</h1>
+    <p class="muted">Эти данные подготовят size memory, mood shopping и персональные рекомендации в будущих этапах.</p>
+    <form method="post" class="account-form account-form--grid" novalidate>
+      {% csrf_token %}
+      {% include "components/form_errors.html" with form=form %}
+      {% for field in form %}
+        <label class="form-field {% if field.field.widget.input_type == 'checkbox' %}form-field--checkbox{% endif %}" for="{{ field.id_for_label }}">
+          <span>{{ field.label }}</span>
+          {{ field }}
+        </label>
+      {% endfor %}
+      <div class="form-actions">
+        <button class="button button--primary" type="submit">Сохранить профиль</button>
+        <a class="button button--secondary" href="{% url 'accounts:dashboard' %}">Назад</a>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

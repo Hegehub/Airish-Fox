@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load money %}
+
+{% block content %}
+<section class="order-page container">
+  <div class="account-hero">
+    <p class="eyebrow">Order</p>
+    <h1>Заказ {{ order.number }}</h1>
+    <p>Статус: <strong>{{ order.get_status_display }}</strong> · Оплата: <strong>{{ order.get_payment_status_display }}</strong></p>
+  </div>
+  <div class="checkout-layout">
+    <div class="checkout-main">
+      <section class="checkout-panel">
+        <h2>Товары</h2>
+        {% for item in order.items.all %}
+          <article class="checkout-mini-item">
+            <span>{{ item.product_name }} · {{ item.size }} · {{ item.color_name }} × {{ item.quantity }}</span>
+            <strong>{{ item.line_total|money_vnd }}</strong>
+          </article>
+        {% endfor %}
+      </section>
+      <section class="checkout-panel">
+        <h2>Доставка</h2>
+        <p>{{ order.full_name }} · {{ order.phone }}</p>
+        <p>{{ order.shipping_street_address }}, {{ order.shipping_district }} {{ order.shipping_city }}, {{ order.shipping_country }}</p>
+        <p>Способ: {{ order.shipping_method_name }}</p>
+      </section>
+      {% if order.is_gift %}
+        <section class="checkout-panel"><h2>Gift info</h2><p>{{ order.gift_message|default:"Подарочный заказ" }}</p>{% if order.hide_price_in_package %}<p>Цены будут скрыты внутри посылки.</p>{% endif %}</section>
+      {% endif %}
+    </div>
+    {% include "components/order_summary.html" with order=order %}
+  </div>
+</section>
+{% endblock %}

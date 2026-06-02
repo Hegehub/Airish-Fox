@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="store-page container">
+  <div class="store-hero">
+    <div>
+      <p class="eyebrow">Visit Airish Fox</p>
+      <h1>Физический магазин Airish Fox во Вьетнаме</h1>
+      <p>Заберите заказ в магазине или загляните на примерку. Мягкая мята, оранжевый акцент и вещи, которые лучше увидеть вживую.</p>
+      <div class="store-actions">
+        {% if main_store %}<a class="button button--primary" href="{{ main_store.get_directions_url }}" target="_blank" rel="noopener">Построить маршрут</a>{% endif %}
+        <a class="button button--secondary" href="{% url 'catalog:product_list' %}">Смотреть коллекцию</a>
+      </div>
+    </div>
+    {% include "components/mascot.html" with state="map_guide" size="large" label="Airish Fox map guide mascot" %}
+  </div>
+
+  {% if main_store %}
+    {% include "components/google_map.html" with store=main_store %}
+  {% endif %}
+
+  <div class="store-benefits">
+    <article><h3>Самовывоз</h3><p>Оформите заказ и заберите его в Airish Fox.</p></article>
+    <article><h3>Примерка в магазине</h3><p>Проверьте посадку и настроение вещи перед покупкой.</p></article>
+    <article><h3>Помощь с размером</h3><p>Команда подскажет крой, размер и mood-подборку.</p></article>
+  </div>
+
+  <div class="section-heading section-heading--row">
+    <div><p class="eyebrow">Stores</p><h2>Где нас найти</h2></div>
+  </div>
+  <div class="store-grid">
+    {% for store in stores %}
+      {% include "components/store_card.html" with store=store %}
+    {% empty %}
+      {% include "components/empty_state.html" with title="Магазин скоро появится" message="Лисичка уже ищет уютное место для Airish Fox." %}
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+  {% if google_maps_api_key %}
+    <script src="{% static 'js/google-map.js' %}" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initAirishFoxMaps{% if google_maps_map_id %}&map_ids={{ google_maps_map_id }}{% endif %}" defer></script>
+  {% endif %}
+{% endblock %}
