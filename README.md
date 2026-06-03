@@ -640,3 +640,26 @@ docker compose -f docker-compose.prod.yml up --build
 ```
 
 Then run migrations, collect static files and create an admin user from the web container as needed.
+
+## Vercel deployment notes
+
+Vercel's Python builder parses dependency files before running Django, so the root `requirements.txt` and `requirements/prod.txt` are intentionally flat and do not use recursive `-r` includes.
+
+Set these Vercel Environment Variables before deploying:
+
+```env
+DJANGO_SETTINGS_MODULE=config.settings.prod
+SECRET_KEY=<real-secret>
+DEBUG=False
+ALLOWED_HOSTS=airish-fox.vercel.app,.vercel.app
+CSRF_TRUSTED_ORIGINS=https://airish-fox.vercel.app
+ADMIN_URL=secure-admin/
+DATABASE_URL=<external-postgresql-url>
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=True
+CSRF_COOKIE_SECURE=True
+SECURE_HSTS_SECONDS=0
+ANTOM_PAYMENTS_ENABLED=False
+```
+
+Do not commit secrets to the repository. Use an external PostgreSQL database; Vercel serverless functions are not a replacement for persistent database/media storage, Redis workers or long-running Celery processes.
