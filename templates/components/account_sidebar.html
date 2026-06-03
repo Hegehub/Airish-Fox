@@ -1,0 +1,12 @@
+<aside class="account-sidebar" aria-label="Навигация личного кабинета">
+  {% include "components/mascot.html" with state="happy" size="small" label="Airish Fox account mascot" %}
+  <h2>{{ request.user.get_username }}</h2>
+  <p>{{ request.user.email }}</p>
+  <nav>
+    <a href="{% url 'accounts:dashboard' %}">Кабинет</a>
+    <a href="{% url 'accounts:profile' %}">Профиль</a>
+    <a href="{% url 'accounts:address_list' %}">Адреса</a>
+    <a href="{% url 'orders:history' %}">Мои заказы</a>
+    <a href="{% url 'accounts:password_change' %}">Пароль</a>
+  </nav>
+</aside>

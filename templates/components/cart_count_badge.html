@@ -1,0 +1,4 @@
+<a class="cart-count-link" href="{% url 'cart:detail' %}" aria-label="Корзина">
+  <span>Корзина</span>
+  {% if cart_items_count > 0 %}<span class="cart-count-badge">{{ cart_items_count }}</span>{% endif %}
+</a>

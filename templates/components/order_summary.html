@@ -1,0 +1,10 @@
+{% load money %}
+<aside class="cart-summary order-summary">
+  <h2>Сумма заказа</h2>
+  <dl>
+    <div><dt>Subtotal</dt><dd>{{ subtotal|default:order.subtotal|money_vnd }}</dd></div>
+    <div><dt>Доставка</dt><dd>{{ shipping_total|default:order.shipping_total|money_vnd }}</dd></div>
+    <div><dt>Скидка</dt><dd>-{{ discount_total|default:order.discount_total|money_vnd }}</dd></div>
+    <div><dt>Итого</dt><dd>{{ grand_total|default:order.grand_total|money_vnd }}</dd></div>
+  </dl>
+</aside>

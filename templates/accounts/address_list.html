@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="account-layout container">
+  {% include "components/account_sidebar.html" %}
+  <div class="account-main">
+    <div class="section-heading section-heading--row">
+      <div>
+        <p class="eyebrow">Shipping</p>
+        <h1>Адреса доставки</h1>
+      </div>
+      <a class="button button--primary" href="{% url 'accounts:address_create' %}">Добавить адрес</a>
+    </div>
+    {% if addresses %}
+      <div class="address-grid">
+        {% for address in addresses %}{% include "components/address_card.html" with address=address %}{% endfor %}
+      </div>
+    {% else %}
+      {% include "components/empty_state.html" with title="Лисичка пока не нашла адреса" message="Добавьте первый адрес доставки для будущего оформления заказа." %}
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

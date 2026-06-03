@@ -1,0 +1,19 @@
+<aside class="cart-summary">
+  <h2>Итого</h2>
+  <dl>
+    <div>
+      <dt>Товары</dt>
+      <dd>{{ items_count }}</dd>
+    </div>
+    <div>
+      <dt>Subtotal</dt>
+      <dd>{{ subtotal }} ₫</dd>
+    </div>
+  </dl>
+  <a class="button button--primary" href="{% url 'checkout:checkout' %}">Перейти к оформлению</a>
+  <p class="muted">Онлайн-оплата будет подключена на следующем этапе.</p>
+  <form method="post" action="{% url 'cart:clear' %}">
+    {% csrf_token %}
+    <button class="button button--ghost" type="submit">Очистить корзину</button>
+  </form>
+</aside>

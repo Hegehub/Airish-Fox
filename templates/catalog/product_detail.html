@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block extra_meta %}
+{% if product_schema_json %}<script type="application/ld+json">{{ product_schema_json|safe }}</script>{% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="product-detail container" data-product-detail>
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <a href="{% url 'core:home' %}">Главная</a>
+    <span>/</span>
+    <a href="{% url 'catalog:product_list' %}">Каталог</a>
+    <span>/</span>
+    <span>{{ product.name }}</span>
+  </nav>
+
+  <div class="product-detail__grid">
+    {% include "components/product_gallery.html" with product=product gallery=gallery %}
+    <article class="product-detail__content">
+      {% include "components/product_badges.html" with product=product %}
+      <p class="product-card__category"><a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a></p>
+      <h1>{{ product.name }}</h1>
+      <p class="product-detail__lead">{{ product.short_description }}</p>
+
+      <div class="product-detail__meta">
+        {% for mood in product.moods.all %}<a class="mini-pill" href="{{ mood.get_absolute_url }}">{{ mood.name }}</a>{% endfor %}
+        {% for collection in product.collections.all %}<a class="mini-pill" href="{{ collection.get_absolute_url }}">{{ collection.name }}</a>{% endfor %}
+      </div>
+
+      <div class="product-detail__price">
+        {% with first_variant=variants.first %}
+          {% include "components/product_price.html" with variant=first_variant product=product %}
+          <p class="stock-hint" data-stock-value>{% if first_variant and first_variant.is_in_stock %}В наличии: {{ first_variant.stock_quantity }}{% else %}Нет в наличии{% endif %}</p>
+        {% endwith %}
+      </div>
+
+      {% if variants %}
+        <form method="post" action="{% url 'cart:add' %}" class="add-to-cart-form">
+          {% csrf_token %}
+          {% include "components/variant_selector.html" with variants=variants default_variant=default_variant input_name="variant_id" %}
+          <label class="form-field add-to-cart-form__quantity" for="product-quantity">
+            <span>Количество</span>
+            <input id="product-quantity" class="form-control" type="number" name="quantity" value="1" min="1" {% if default_variant %}max="{{ default_variant.stock_quantity }}"{% endif %}>
+          </label>
+          {% if product.is_available %}
+            <button class="button button--primary" type="submit">Добавить в корзину</button>
+          {% else %}
+            <button class="button button--primary button--disabled" type="button" disabled>Нет в наличии</button>
+          {% endif %}
+        </form>
+        {% include "components/wishlist_button.html" with product=product %}
+      {% else %}
+        <p class="cart-warning">Варианты скоро появятся.</p>
+      {% endif %}
+
+      {% if product.description %}<div class="rich-text"><h2>Описание</h2><p>{{ product.description }}</p></div>{% endif %}
+      {% if product.material %}<div class="rich-text"><h2>Материал</h2><p>{{ product.material }}</p></div>{% endif %}
+      {% if product.care_instructions %}<div class="rich-text"><h2>Уход</h2><p>{{ product.care_instructions }}</p></div>{% endif %}
+    </article>
+  </div>
+</section>
+
+<section class="container catalog-section">
+  <div class="section-heading">
+    <p class="eyebrow">Related</p>
+    <h2>Похожие товары</h2>
+  </div>
+  {% if related_products %}
+    <div class="product-grid product-grid--compact">
+      {% for product in related_products %}{% include "components/product_card.html" with product=product %}{% endfor %}
+    </div>
+  {% else %}
+    {% include "components/empty_state.html" with title="Похожие товары скоро появятся" message="Мы подберём вещи из той же категории или настроения." %}
+  {% endif %}
+</section>
+{% endblock %}

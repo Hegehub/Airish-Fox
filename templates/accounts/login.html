@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="auth-page container">
+  <div class="auth-card">
+    <div>
+      <p class="eyebrow">Welcome back</p>
+      <h1>Вход</h1>
+      <p>Войдите в личный кабинет Airish Fox, чтобы управлять профилем и адресами доставки.</p>
+    </div>
+    <form method="post" class="account-form" novalidate>
+      {% csrf_token %}
+      {% include "components/form_errors.html" with form=form %}
+      {% for field in form %}
+        <label class="form-field" for="{{ field.id_for_label }}">
+          <span>{{ field.label }}</span>
+          {{ field }}
+        </label>
+      {% endfor %}
+      <button class="button button--primary" type="submit">Войти</button>
+    </form>
+    <p class="auth-switch">Новый покупатель? <a href="{% url 'accounts:register' %}">Создать аккаунт</a></p>
+  </div>
+</section>
+{% endblock %}

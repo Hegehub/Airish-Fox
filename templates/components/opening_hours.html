@@ -1,0 +1,18 @@
+<div class="opening-hours">
+  <h3>Часы работы</h3>
+  {% if store.opening_hours.all %}
+    <dl>
+      {% for hour in store.opening_hours.all %}
+        <div class="opening-hours__row{% if hour.is_open_today %} opening-hours__row--today{% endif %}">
+          <dt>{{ hour.get_weekday_display_name }}</dt>
+          <dd>
+            {% if hour.is_closed %}Закрыто{% else %}{{ hour.opens_at|time:"H:i" }}–{{ hour.closes_at|time:"H:i" }}{% endif %}
+            {% if hour.note %}<span>{{ hour.note }}</span>{% endif %}
+          </dd>
+        </div>
+      {% endfor %}
+    </dl>
+  {% else %}
+    <p class="muted">Часы работы скоро появятся. Свяжитесь с магазином перед визитом.</p>
+  {% endif %}
+</div>

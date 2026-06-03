@@ -1,0 +1,6 @@
+<div class="product-badges" aria-label="Бейджи товара">
+  {% if product.badge %}<span class="product-badge product-badge--accent">{{ product.badge }}</span>{% endif %}
+  {% if product.is_new %}<span class="product-badge">Новинка</span>{% endif %}
+  {% if product.is_fox_pick %}<span class="product-badge product-badge--mint">Fox Pick</span>{% endif %}
+  {% if product.is_gift_ready %}<span class="product-badge product-badge--pink">Gift Ready</span>{% endif %}
+</div>

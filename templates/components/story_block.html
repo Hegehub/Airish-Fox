@@ -1,0 +1,4 @@
+<article class="story-block">
+  {% if story.image %}<img src="{{ story.image.url }}" alt="{{ story.title }}" loading="lazy">{% else %}{% include "components/mascot.html" with state=story.mascot_state size="medium" label=story.title %}{% endif %}
+  <div><p class="eyebrow">{{ story.subtitle|default:"Airish Fox" }}</p><h3>{{ story.title }}</h3><p>{{ story.text }}</p>{% if story.cta_label and story.cta_url %}<a class="text-link" href="{{ story.cta_url }}">{{ story.cta_label }}</a>{% endif %}</div>
+</article>

@@ -1,0 +1,24 @@
+{% firstof input_name "variant_preview" as radio_name %}
+<div class="variant-selector" data-variant-preview>
+  <h3>Варианты</h3>
+  {% for variant in variants %}
+    <label class="variant-option {% if not variant.is_in_stock %}variant-option--disabled{% endif %}">
+      <input
+        type="radio"
+        name="{{ radio_name }}"
+        value="{{ variant.id }}"
+        data-price="{{ variant.price }} ₫"
+        data-compare-price="{% if variant.compare_at_price %}{{ variant.compare_at_price }} ₫{% endif %}"
+        data-stock="{% if variant.is_in_stock %}В наличии: {{ variant.stock_quantity }}{% else %}Нет в наличии{% endif %}"
+        data-stock-quantity="{{ variant.stock_quantity }}"
+        {% if default_variant and variant.id == default_variant.id %}checked{% elif not default_variant and forloop.first %}checked{% endif %}
+        {% if not variant.is_in_stock %}disabled{% endif %}
+      >
+      <span class="variant-option__color" style="--dot-color: {{ variant.color_hex }}"></span>
+      <span>{{ variant.size }} / {{ variant.color_name }}</span>
+      <strong>{% if variant.is_in_stock %}{{ variant.price }} ₫{% else %}Нет в наличии{% endif %}</strong>
+    </label>
+  {% empty %}
+    <p class="muted">Варианты скоро появятся.</p>
+  {% endfor %}
+</div>
