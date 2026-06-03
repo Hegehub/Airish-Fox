@@ -963,3 +963,11 @@ img { max-width: 100%; height: auto; }
   outline: 3px solid var(--color-bitcoin-orange);
   outline-offset: 3px;
 }
+
+.honeypot-field {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}

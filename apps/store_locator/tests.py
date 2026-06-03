@@ -93,3 +93,8 @@ class StoreLocatorTests(TestCase):
             pickup_store_address=self.store.get_display_address(),
         )
         self.assertEqual(order.pickup_store, self.store)
+
+    def test_store_detail_includes_local_business_schema(self):
+        response = self.client.get(self.store.get_absolute_url())
+        self.assertContains(response, '"@type": "ClothingStore"')
+        self.assertContains(response, self.store.street_address)

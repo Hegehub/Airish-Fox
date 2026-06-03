@@ -12,3 +12,7 @@ Recommended admin workflows:
 - Brand layer: manage feature toggles, homepage story blocks, badges, drops and quiz questions.
 
 Never paste private payment keys or card data into admin fields.
+
+## Payment/admin safety
+
+Payment transaction and webhook raw payload fields are audit records and should remain read-only. Do not paste Antom private keys, card data or customer payment instruments into admin notes or model fields.

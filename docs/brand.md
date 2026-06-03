@@ -21,3 +21,7 @@ Brand SVG лежат в `static/images/brand/`:
 - `fox-favicon.svg` — favicon.
 
 Production-логотип Airish Fox — только собственный SVG. Emoji не используются как logo, favicon или mascot.
+
+## Production SVG policy
+
+Airish Fox uses trusted static SVG assets under `static/images/brand/`; emoji must not be used as production logo or mascot. Mascot states include `idle`, `happy`, `thinking`, `cart_empty`, `payment_success`, `gift`, `gift_mode`, `map_guide` and `fox_pick`. SVG files should not contain scripts or external resource links.

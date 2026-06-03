@@ -8,6 +8,7 @@
   {% if questions %}
     <form method="post" class="quiz-form">
       {% csrf_token %}
+      <input type="text" name="website" value="" tabindex="-1" autocomplete="off" class="honeypot-field" aria-hidden="true">
       {% for question in questions %}
         <fieldset class="checkout-panel quiz-question">
           <legend><strong>{{ question.title }}</strong></legend>

@@ -616,3 +616,27 @@ The command intentionally does not guess live provider APIs; see `docs/payments-
 - `docs/payments-antom.md` — hosted Antom flow, webhook safety and reconciliation.
 - `docs/google-maps.md` — Google Maps key restrictions and fallback behavior.
 - `docs/admin-guide.md` — operational admin workflows.
+
+## Final launch QA checklist
+
+Before live launch, verify:
+
+- `python manage.py check`, `python manage.py test`, `python manage.py migrate`, `python manage.py collectstatic --noinput` and `python manage.py check --deploy` pass in an environment with dependencies installed.
+- `DATABASE_URL`, `REDIS_URL`, `SECRET_KEY`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`, `ADMIN_URL`, email SMTP settings, Antom keys and Google Maps keys are configured from environment variables.
+- The Antom payment flow remains hosted/redirect only; Airish Fox must not collect or store card number, CVV or expiry date.
+- Antom dashboard notification URL points to `/payments/antom/notify/` on a public HTTPS domain, and the return URL points to `/payments/antom/return/`.
+- Google Maps API key is restricted by HTTP referrer/domain and limited to the APIs actually used by the store locator.
+- Production media uses durable S3-compatible/object storage or an equivalent media strategy; local media is for development only.
+- Preferred production hosting is server/Docker oriented: VPS, Render, Railway, Fly.io or another platform that supports web workers, Redis/Celery, media storage and public payment webhooks. Vercel is not ideal for this full Django e-commerce deployment.
+
+See `docs/deployment.md`, `docs/security.md`, `docs/payment-antom.md`, `docs/google-maps.md`, `docs/admin-guide.md` and `docs/brand.md` for operational details.
+
+### Docker prod-like start
+
+For a production-like container run, provide `.env` with production values and use:
+
+```bash
+docker compose -f docker-compose.prod.yml up --build
+```
+
+Then run migrations, collect static files and create an admin user from the web container as needed.

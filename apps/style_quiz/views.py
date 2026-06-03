@@ -1,10 +1,18 @@
 """Fox Style Quiz views."""
+
 from urllib.parse import urlencode
+
+from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
+
 from apps.brand.services import is_feature_enabled
+from apps.core.ratelimit import check_rate_limit
+
 from .models import StyleQuizQuestion, StyleQuizSubmission
+
 
 class StyleQuizView(View):
     template_name = "style_quiz/start.html"
@@ -13,9 +21,22 @@ class StyleQuizView(View):
         return StyleQuizQuestion.objects.filter(is_active=True).prefetch_related("options", "options__mood", "options__category")
 
     def get(self, request):
-        return render(request, self.template_name, {"questions": self.get_questions(), "page_title": "Fox Style Quiz — Airish Fox", "meta_description": "Простой quiz Airish Fox подбирает mood, цвет и gift-ready подборку без AI."})
+        return render(
+            request,
+            self.template_name,
+            {
+                "questions": self.get_questions(),
+                "page_title": "Fox Style Quiz — Airish Fox",
+                "meta_description": "Простой quiz Airish Fox подбирает mood, цвет и gift-ready подборку без AI.",
+            },
+        )
 
     def post(self, request):
+        if check_rate_limit(request, "style_quiz").limited:
+            messages.error(request, "Слишком много попыток отправки quiz. Попробуйте позже.")
+            return HttpResponse("Too many quiz attempts.", status=429)
+        if request.POST.get("website"):
+            return redirect("catalog:product_list")
         if not is_feature_enabled("style_quiz_enabled", True):
             return redirect("catalog:product_list")
         questions = self.get_questions()
@@ -42,9 +63,15 @@ class StyleQuizView(View):
             result_url = f"{result_url}?{urlencode(params)}"
         if not request.session.session_key:
             request.session.save()
-        StyleQuizSubmission.objects.create(user=request.user if request.user.is_authenticated else None, session_key=request.session.session_key or "", answers=answers, result_url=result_url)
+        StyleQuizSubmission.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            session_key=request.session.session_key or "",
+            answers=answers,
+            result_url=result_url,
+        )
         request.session["style_quiz_result_url"] = result_url
         return redirect(result_url)
+
 
 class StyleQuizResultsView(View):
     def get(self, request):

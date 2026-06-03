@@ -21,3 +21,11 @@ The site uses hosted/redirect payment flow only. It must not collect, log or sto
 ## Logging
 
 Payment logs may include `payment_request_id`, order number and status transitions. Do not log private keys, customer passwords, authorization headers, card data or sensitive tokens.
+
+## Reverse proxy
+
+When running behind Nginx, Caddy, Traefik or a platform load balancer, set `SECURE_PROXY_SSL_HEADER_ENABLED=True` only if the proxy reliably sends `X-Forwarded-Proto=https`. Keep `USE_X_FORWARDED_HOST=True` only for trusted proxies.
+
+## Email
+
+Production SMTP credentials (`EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `DEFAULT_FROM_EMAIL`) must come from the runtime environment. Development can use Django's console backend.

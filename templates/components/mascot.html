@@ -4,7 +4,7 @@
   {% elif current_state == "thinking" %}{% static "images/brand/mascot/fox-thinking.svg" as mascot_src %}
   {% elif current_state == "cart_empty" or current_state == "empty" %}{% static "images/brand/mascot/fox-cart-empty.svg" as mascot_src %}
   {% elif current_state == "payment_success" %}{% static "images/brand/mascot/fox-payment-success.svg" as mascot_src %}
-  {% elif current_state == "gift" %}{% static "images/brand/mascot/fox-gift.svg" as mascot_src %}
+  {% elif current_state == "gift" or current_state == "gift_mode" %}{% static "images/brand/mascot/fox-gift.svg" as mascot_src %}
   {% elif current_state == "map_guide" %}{% static "images/brand/mascot/fox-map-guide.svg" as mascot_src %}
   {% elif current_state == "fox_pick" %}{% static "images/brand/mascot/fox-pick.svg" as mascot_src %}
   {% else %}{% static "images/brand/mascot/fox-idle.svg" as mascot_src %}{% endif %}

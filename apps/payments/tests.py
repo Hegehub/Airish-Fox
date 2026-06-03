@@ -144,3 +144,15 @@ class PaymentTests(PaymentTestDataMixin, TestCase):
         self.client.login(username="staffpay", password="StrongPass123")
         response = self.client.post(reverse("payments:antom_create", kwargs={"order_number": self.order.number}))
         self.assertEqual(response.status_code, 302)
+
+    @patch("apps.payments.providers.antom_2c2p.Antom2C2PPaymentProvider.verify_notification")
+    def test_failed_payment_does_not_reduce_stock(self, mock_verify):
+        transaction = PaymentTransaction.objects.create(order=self.order, payment_request_id=f"PAY-{self.order.number}", amount=self.order.grand_total, currency="VND")
+        payload = {"paymentRequestId": transaction.payment_request_id, "paymentStatus": "FAIL", "result": {"resultCode": "FAIL", "resultMessage": "declined"}}
+        mock_verify.return_value = payload
+        response = self.client.post(reverse("payments:antom_notify"), data=json.dumps(payload), content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.variant.refresh_from_db()
+        self.order.refresh_from_db()
+        self.assertEqual(self.variant.stock_quantity, 5)
+        self.assertEqual(self.order.payment_status, Order.PaymentStatus.FAILED)

@@ -136,10 +136,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 REFERRER_POLICY = "strict-origin-when-cross-origin"
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https") if env_bool("SECURE_PROXY_SSL_HEADER_ENABLED", False) else None
+USE_X_FORWARDED_HOST = env_bool("USE_X_FORWARDED_HOST", False)
 REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
 GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY", "")
 GOOGLE_MAPS_MAP_ID = os.getenv("GOOGLE_MAPS_MAP_ID", "")
 GOOGLE_MAPS_DEFAULT_ZOOM = int(os.getenv("GOOGLE_MAPS_DEFAULT_ZOOM", "15"))
+
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Airish Fox <noreply@localhost>")
 
 ANTOM = {
     "ENV": os.getenv("ANTOM_ENV", "sandbox"),
@@ -165,6 +175,8 @@ RATE_LIMITS = {
     "register": os.getenv("RATE_LIMIT_REGISTER", "5/600"),
     "checkout": os.getenv("RATE_LIMIT_CHECKOUT", "8/300"),
     "payment_create": os.getenv("RATE_LIMIT_PAYMENT_CREATE", "12/300"),
+    "waitlist": os.getenv("RATE_LIMIT_WAITLIST", "5/600"),
+    "style_quiz": os.getenv("RATE_LIMIT_STYLE_QUIZ", "20/300"),
 }
 
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", REDIS_URL)

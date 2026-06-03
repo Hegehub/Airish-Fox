@@ -79,3 +79,12 @@ class ProductionHardeningTests(TestCase):
     def test_skip_link_is_present(self):
         response = self.client.get(reverse("core:home"))
         self.assertContains(response, "Перейти к содержимому")
+
+    def test_base_template_references_favicon(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "fox-favicon.svg")
+
+    def test_navbar_uses_svg_logo_without_emoji_fox(self):
+        response = self.client.get(reverse("core:home"))
+        self.assertContains(response, "fox-logo.svg")
+        self.assertNotContains(response, "🦊")

@@ -18,9 +18,14 @@ if not os.getenv("ADMIN_URL") or ADMIN_URL == "admin/":
     raise ImproperlyConfigured("ADMIN_URL must be set to a non-default path in production.")
 
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")  # noqa: F405
+if not os.getenv("DATABASE_URL"):
+    raise ImproperlyConfigured("DATABASE_URL is required in production.")
+
 DATABASES = {"default": database_config()}  # noqa: F405
 
 SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", True)  # noqa: F405
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https") if env_bool("SECURE_PROXY_SSL_HEADER_ENABLED", True) else None  # noqa: F405
+USE_X_FORWARDED_HOST = env_bool("USE_X_FORWARDED_HOST", True)  # noqa: F405
 SESSION_COOKIE_SECURE = env_bool("SESSION_COOKIE_SECURE", True)  # noqa: F405
 CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE", True)  # noqa: F405
 SECURE_HSTS_SECONDS = int(os.getenv("SECURE_HSTS_SECONDS", "31536000"))
