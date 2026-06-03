@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Airish Fox mark</title>
+  <desc id="desc">Small geometric fox face brand mark.</desc>
+  <path fill="#D95F18" d="M8 10 23 23l9-10 9 10 15-13-7 31c-1.8 7.8-8.6 13-17 13s-15.2-5.2-17-13L8 10Z"/>
+  <path fill="#F7931A" d="M23 23 32 13l9 10-3 19H26l-3-19Z"/>
+  <path fill="#B8F2D0" d="M19 40h26c-2 6-6.6 10-13 10s-11-4-13-10Z"/>
+  <path fill="#242424" d="M24 33a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm16 0a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm-11 10 3 2.7 3-2.7c.7-.6.2-1.8-.7-1.8h-4.6c-.9 0-1.4 1.2-.7 1.8Z"/>
+</svg>

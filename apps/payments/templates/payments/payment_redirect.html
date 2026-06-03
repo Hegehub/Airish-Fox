@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="payment-page container">
+  <div class="account-hero">
+    {% include "components/mascot.html" with state="idle" size="medium" label="Airish Fox payment redirect mascot" %}
+    <p class="eyebrow">Secure payment</p>
+    <h1>Перенаправляем на защищённую страницу оплаты...</h1>
+    <p>Если перенаправление не произошло автоматически, вернитесь к заказу и попробуйте снова.</p>
+    {% if order %}<a class="button button--secondary" href="{{ order.get_absolute_url }}">Вернуться к заказу</a>{% endif %}
+  </div>
+</section>
+{% endblock %}

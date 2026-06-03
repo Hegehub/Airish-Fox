@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_meta %}
+  {% if local_business_json %}<script type="application/ld+json">{{ local_business_json|safe }}</script>{% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="store-page container">
+  <div class="store-detail-hero">
+    <div>
+      <p class="eyebrow">Airish Fox Store</p>
+      <h1>{{ store.name }}</h1>
+      <p>{{ store.short_description|default:"Лисичка подскажет дорогу к Airish Fox." }}</p>
+      <div class="store-badges">
+        {% if store.pickup_available %}<span>Самовывоз доступен</span>{% endif %}
+        {% if store.fitting_available %}<span>Примерка доступна</span>{% endif %}
+      </div>
+    </div>
+    {% if store.image %}<img class="store-detail-hero__image" src="{{ store.image.url }}" alt="{{ store.name }}" loading="lazy">{% else %}{% include "components/mascot.html" with state="map_guide" size="large" label="Airish Fox store guide" %}{% endif %}
+  </div>
+
+  <div class="store-detail-layout">
+    <div class="store-detail-main">
+      {% include "components/google_map.html" with store=store %}
+      <section class="checkout-panel">
+        <h2>Адрес</h2>
+        <p>{{ store.get_display_address }}</p>
+        <p>{{ store.district }}{% if store.district %}, {% endif %}{{ store.city }}, {{ store.country }}</p>
+      </section>
+      <section class="checkout-panel">
+        <h2>Контакты</h2>
+        {% if store.phone %}<p>Телефон: <a href="tel:{{ store.phone }}">{{ store.phone }}</a></p>{% endif %}
+        {% if store.email %}<p>Email: <a href="mailto:{{ store.email }}">{{ store.email }}</a></p>{% endif %}
+        <div class="store-actions">
+          {% if store.whatsapp_url %}<a class="button button--secondary" href="{{ store.whatsapp_url }}" target="_blank" rel="noopener">Написать в WhatsApp</a>{% endif %}
+          {% if store.telegram_url %}<a class="button button--secondary" href="{{ store.telegram_url }}" target="_blank" rel="noopener">Написать в Telegram</a>{% endif %}
+          {% if store.instagram_url %}<a class="button button--secondary" href="{{ store.instagram_url }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+        </div>
+      </section>
+      {% if store.description %}<section class="checkout-panel"><h2>О магазине</h2><p>{{ store.description }}</p></section>{% endif %}
+      {% if store.photos.all %}
+        <section class="checkout-panel">
+          <h2>Фото магазина</h2>
+          <div class="store-gallery">
+            {% for photo in store.photos.all %}<img src="{{ photo.image.url }}" alt="{{ photo.alt_text|default:store.name }}" loading="lazy">{% endfor %}
+          </div>
+        </section>
+      {% endif %}
+    </div>
+    <aside class="store-detail-sidebar">
+      {% include "components/route_cta.html" with store=store %}
+      {% include "components/opening_hours.html" with store=store %}
+      <a class="button button--primary" href="{% url 'catalog:product_list' %}">Смотреть коллекцию</a>
+    </aside>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+  {% if google_maps_api_key %}
+    <script src="{% static 'js/google-map.js' %}" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initAirishFoxMaps{% if google_maps_map_id %}&map_ids={{ google_maps_map_id }}{% endif %}" defer></script>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load money %}
+
+{% block content %}
+<section class="account-layout container">
+  {% include "components/account_sidebar.html" %}
+  <div class="account-main">
+    <div class="section-heading section-heading--row">
+      <div>
+        <p class="eyebrow">Orders</p>
+        <h1>Мои заказы</h1>
+      </div>
+      <a class="button button--secondary" href="{% url 'catalog:product_list' %}">В каталог</a>
+    </div>
+    {% if orders %}
+      <div class="order-history-list">
+        {% for order in orders %}
+          <article class="address-card">
+            <h2><a href="{{ order.get_absolute_url }}">{{ order.number }}</a></h2>
+            <p>{{ order.created_at|date:"d.m.Y H:i" }} · {{ order.get_status_display }} · {{ order.get_payment_status_display }}</p>
+            <strong>{{ order.grand_total|money_vnd }}</strong>
+            {% if order.payment_status == "paid" %}
+              <span class="product-badge product-badge--mint">Оплачен</span>
+            {% elif order.can_be_paid %}
+              <form method="post" action="{% url 'payments:antom_create' order.number %}" class="form-actions">
+                {% csrf_token %}
+                <button class="button button--secondary" type="submit">{% if order.payment_status == "failed" %}Повторить оплату{% else %}Продолжить оплату{% endif %}</button>
+              </form>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      {% include "components/empty_state.html" with title="Заказов пока нет" message="Создайте первый заказ из корзины Airish Fox." %}
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

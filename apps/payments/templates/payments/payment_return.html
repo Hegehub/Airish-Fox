@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="payment-page container">
+  <div class="account-hero">
+    {% include "components/mascot.html" with state="idle" size="medium" label="Airish Fox payment return mascot" %}
+    <p class="eyebrow">Payment status</p>
+    {% if state == "success" %}
+      <h1>Оплата подтверждена</h1>
+      <p>Платёж уже подтверждён webhook-уведомлением.</p>
+    {% elif state == "failed" %}
+      <h1>Не удалось подтвердить оплату</h1>
+      <p>Платёж завершился ошибкой или был отменён.</p>
+    {% elif state == "pending" %}
+      <h1>Платёж обрабатывается</h1>
+      <p>Финальный статус подтверждается через уведомление платёжного провайдера.</p>
+    {% else %}
+      <h1>Платёж не найден</h1>
+      <p>Мы не смогли определить транзакцию по данным возврата.</p>
+    {% endif %}
+    {% if order %}<a class="button button--primary" href="{{ order.get_absolute_url }}">Перейти к заказу</a>{% endif %}
+  </div>
+</section>
+{% endblock %}

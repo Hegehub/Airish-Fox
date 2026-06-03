@@ -1,0 +1,11 @@
+<div class="product-gallery">
+  {% for image in gallery %}
+    <figure class="product-gallery__item">
+      <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }}" loading="lazy">
+    </figure>
+  {% empty %}
+    <div class="product-gallery__placeholder">
+      {% include "components/mascot.html" with state="empty" size="medium" label="Airish Fox product placeholder" %}
+    </div>
+  {% endfor %}
+</div>

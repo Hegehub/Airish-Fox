@@ -1,0 +1,4 @@
+<form method="post" action="{% url 'wishlist:toggle' product.id %}" class="wishlist-button-form" data-brand-enhance>
+  {% csrf_token %}
+  <button class="wishlist-button" type="submit" aria-label="Добавить {{ product.name }} в избранное">В избранное</button>
+</form>

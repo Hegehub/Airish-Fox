@@ -1,0 +1,6 @@
+<section class="empty-state cart-empty">
+  {% include "components/mascot.html" with state="empty" size="medium" label="Airish Fox empty cart mascot" %}
+  <h2>Лисичка пока не нашла товары в вашей корзине.</h2>
+  <p>Загляните в каталог и выберите настроение для будущего образа.</p>
+  <a class="button button--primary" href="{% url 'catalog:product_list' %}">Перейти в каталог</a>
+</section>

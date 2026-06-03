@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load money %}
+
+{% block content %}
+<section class="checkout-page container">
+  <div class="catalog-hero cart-page__hero">
+    <p class="eyebrow">Checkout</p>
+    <h1>Оформление заказа</h1>
+    <p>Создайте заказ без онлайн-оплаты. Подключение оплаты будет на следующем этапе.</p>
+  </div>
+  {% include "components/checkout_steps.html" %}
+
+  <form method="post" class="checkout-layout" novalidate>
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+    <div class="checkout-main">
+      {% include "components/form_errors.html" with form=form %}
+      <section class="checkout-panel">
+        <h2>Данные клиента</h2>
+        {% for field in form %}
+          {% if field.name == "full_name" or field.name == "email" or field.name == "phone" %}
+            <label class="form-field" for="{{ field.id_for_label }}"><span>{{ field.label }}</span>{{ field }}</label>
+          {% endif %}
+        {% endfor %}
+      </section>
+
+      <section class="checkout-panel">
+        <h2>Доставка</h2>
+        {% for field in form %}
+          {% if field.name == "shipping_country" or field.name == "shipping_city" or field.name == "shipping_district" or field.name == "shipping_street_address" or field.name == "shipping_postal_code" or field.name == "shipping_method" or field.name == "pickup_store" %}
+            <label class="form-field" for="{{ field.id_for_label }}"><span>{{ field.label }}</span>{{ field }}</label>
+          {% endif %}
+        {% endfor %}
+      </section>
+
+      <section class="checkout-panel">
+        <h2>Промокод и комментарий</h2>
+        {% for field in form %}
+          {% if field.name == "promo_code" or field.name == "notes" %}
+            <label class="form-field" for="{{ field.id_for_label }}"><span>{{ field.label }}</span>{{ field }}</label>
+          {% endif %}
+        {% endfor %}
+      </section>
+
+      {% include "components/gift_options.html" with form=form %}
+      <button class="button button--primary" type="submit">Создать заказ</button>
+    </div>
+
+    <aside class="checkout-sidebar">
+      <section class="cart-summary">
+        <h2>Товары</h2>
+        {% for item in cart_items %}
+          <div class="checkout-mini-item">
+            <span>{{ item.variant.product.name }} · {{ item.variant.size }}</span>
+            <strong>{{ item.get_line_total|money_vnd }}</strong>
+          </div>
+        {% endfor %}
+        <dl><div><dt>Subtotal</dt><dd>{{ subtotal|money_vnd }}</dd></div></dl>
+      </section>
+      <p class="muted">Доставка и скидка будут пересчитаны на сервере после отправки формы.</p>
+    </aside>
+  </form>
+</section>
+{% endblock %}

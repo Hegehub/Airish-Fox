@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" role="img" aria-labelledby="title desc">
+  <title id="title">Airish Fox mascot idle</title>
+  <desc id="desc">Static seated fox mascot for the Airish Fox hero section.</desc>
+  <circle cx="210" cy="210" r="176" fill="#FFF7EA"/>
+  <circle cx="132" cy="106" r="38" fill="#B8F2D0" opacity=".8"/>
+  <circle cx="306" cy="132" r="30" fill="#FFB6C8" opacity=".75"/>
+  <path fill="#D95F18" d="M112 112 177 154l33-60 33 60 65-42-28 145c-8 42-36 72-70 72s-62-30-70-72l-28-145Z"/>
+  <path fill="#F7931A" d="M177 154l33-60 33 60-11 122h-44l-11-122Z"/>
+  <path fill="#FFF7EA" d="M146 244c23 20 42 30 64 30s41-10 64-30l-8 35c-7 30-28 50-56 50s-49-20-56-50l-8-35Z"/>
+  <path fill="#242424" d="M174 220a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm72 0a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm-49 48 13 11 13-11c3-3 1-8-3-8h-20c-4 0-6 5-3 8Z"/>
+  <path fill="none" stroke="#242424" stroke-linecap="round" stroke-width="7" d="M188 289c13 9 31 9 44 0"/>
+  <path fill="#D95F18" d="M255 301c37-4 68 12 82 42 4 9-3 19-13 17-45-8-74-25-87-51l18-8Z"/>
+  <path fill="#F7931A" d="M264 315c23 1 43 10 55 25-25-4-45-12-60-25h5Z"/>
+  <ellipse cx="210" cy="352" fill="#B8F2D0" opacity=".45" rx="102" ry="18"/>
+</svg>

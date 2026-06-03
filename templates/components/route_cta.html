@@ -1,0 +1,9 @@
+<div class="store-route-card">
+  <p class="eyebrow">Route</p>
+  <h3>Лисичка подскажет дорогу к Airish Fox</h3>
+  <p>{{ store.get_display_address }}</p>
+  <div class="store-actions">
+    <a class="button button--primary" href="{{ store.get_directions_url }}" target="_blank" rel="noopener">Построить маршрут</a>
+    {% if store.google_maps_place_url %}<a class="button button--secondary" href="{{ store.google_maps_place_url }}" target="_blank" rel="noopener">Открыть в Google Maps</a>{% endif %}
+  </div>
+</div>

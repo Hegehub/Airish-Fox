@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="cart-page container">
+  <div class="catalog-hero cart-page__hero">
+    <p class="eyebrow">Shopping bag</p>
+    <h1>Корзина</h1>
+    <p>Проверьте выбранные варианты, количество и subtotal. Stock будет списан только после успешной оплаты на будущем этапе.</p>
+  </div>
+
+  {% if cart_items %}
+    <div class="cart-layout">
+      <div class="cart-items">
+        {% for item in cart_items %}
+          {% include "components/cart_item.html" with item=item %}
+        {% endfor %}
+      </div>
+      {% include "components/cart_summary.html" with subtotal=subtotal items_count=items_count %}
+    </div>
+  {% else %}
+    {% include "components/cart_empty.html" %}
+  {% endif %}
+</section>
+{% endblock %}
